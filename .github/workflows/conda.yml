@@ -1,0 +1,29 @@
+name: Build REST
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-update-conda: true
+          activate-environment: test-env
+          python-version: 3.11
+          environment-file: recipe/environment.yml
+          use-mamba: true
+      - name: Build recipe
+        run: |
+          conda-build recipe --output-folder output
+      # - name: Upload artifacts
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: conda-packages
