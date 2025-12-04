@@ -18,7 +18,7 @@ jobs:
           auto-update-conda: true
           activate-environment: test-env
           python-version: 3.11
-          environment-file: recipe/environment.yml
+          # environment-file: recipe/environment.yml
           use-mamba: true
       - name: Build recipe
         run: |
