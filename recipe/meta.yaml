@@ -44,11 +44,12 @@ build:
   # More info about selectors can be found in the conda-build docs: 
   # https://docs.conda.io/projects/conda-build/en/latest/resources/define-metadata.html#preprocessing-selectors
   script_env:
-    - REST_EXT_DIR="../rest_deps"
+    - REST_EXT_DIR="${CONDA_PREFIX}/lib"
+    - HDF5_DIR="${CONDA_PREFIX}"
   script: |
-    mkdir ../rest_deps
-    mkdir ../rest_deps/lib
-    cp ${CONDA_PREFIX}/lib/*.so ../rest_deps/lib/
+    # mkdir ../rest_deps
+    # mkdir ../rest_deps/lib
+    # cp ${CONDA_PREFIX}/lib/*.so ../rest_deps/lib/
     cargo build --release --verbose --no-default-features 
   number: 0
 
@@ -67,6 +68,7 @@ requirements:
     - libxc-c
     - openmpi
     - mokit
+    - geometric
   # host:
   #   #- python
   #   #- pip
