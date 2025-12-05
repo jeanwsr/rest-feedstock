@@ -24,8 +24,14 @@ source:
   #  `openssl sha256 <file name>`.
   # You may need the openssl package, available on conda-forge:
   #  `conda install openssl -c conda-forge`
-  git_url: https://gitee.com/canarias/rest.git
-  git_rev: v{{ version }}
+  - git_url: https://gitee.com/canarias/rest.git
+    git_rev: v{{ version }}
+  - git_url: https://gitee.com/restgroup/rest_tensors.git
+    git_rev: master
+    floder: ../rest_tensors
+  - git_url: https://gitee.com/restgroup/rest_libcint.git
+    git_rev: master
+    folder: ../rest_libcint
 
 build:
   # Uncomment the following line if the package is pure Python and the recipe is exactly the same for all platforms.
@@ -37,7 +43,13 @@ build:
   # Add the line "skip: True  # [py<35]" (for example) to limit to Python 3.5 and newer, or "skip: True  # [not win]" to limit to Windows.
   # More info about selectors can be found in the conda-build docs: 
   # https://docs.conda.io/projects/conda-build/en/latest/resources/define-metadata.html#preprocessing-selectors
-  script: ls
+  script_env:
+    - REST_EXT_DIR="../rest_deps"
+  script: |
+    mkdir ../rest_deps
+    mkdir ../rest_deps/lib
+    cp ${CONDA_PREFIX}/lib/*.so ../rest_deps/lib/
+    cargo build --release --verbose --no-default-features 
   number: 0
 
 requirements:
@@ -49,11 +61,17 @@ requirements:
     # - {{ stdlib('c') }}
     - {{ compiler('rust') }}
     - hdf5
-  host:
-    #- python
-    #- pip
-    #- setuptools
-    - hdf5
+    - libcint
+    - openblas
+    - python
+    - libxc-c
+    - openmpi
+    - mokit/label/cf::mokit
+  # host:
+  #   #- python
+  #   #- pip
+  #   #- setuptools
+  #   - hdf5
   run:
     #- python
     - hdf5
