@@ -22,10 +22,10 @@ jobs:
           # use-mamba: true
       - name: Build recipe
         run: |
-          conda info
-          conda env list
-          # conda activate build-env
-          # conda-build recipe --output-folder output
+          # conda info
+          # conda env list
+          conda activate build-env
+          conda-build recipe --output-folder output
       # - name: Upload artifacts
       #   uses: actions/upload-artifact@v2
       #   with:
