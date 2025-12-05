@@ -62,6 +62,7 @@ build:
     echo RESTFORT${REST_FORTRAN_COMPILER}
     cargo build --release --verbose --no-default-features 
     cargo install --path . --profile release --root ${PREFIX} --no-default-features
+    cp ../rest_deps/lib/librestmatr.so ${PREFIX}/lib/
   number: 0
 
 requirements:
