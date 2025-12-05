@@ -44,7 +44,7 @@ build:
   # More info about selectors can be found in the conda-build docs: 
   # https://docs.conda.io/projects/conda-build/en/latest/resources/define-metadata.html#preprocessing-selectors
   script_env:
-    - REST_HOME="."
+    - REST_HOME=".."
     - REST_EXT_DIR="${BUILD_PREFIX}/lib"
     - HDF5_DIR="${BUILD_PREFIX}"
   script: |
