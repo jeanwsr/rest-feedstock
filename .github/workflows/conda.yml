@@ -13,13 +13,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Set up Miniconda
-        uses: conda-incubator/setup-miniconda@v2
+        uses: conda-incubator/setup-miniconda@v3
         with:
           auto-update-conda: true
           # activate-environment: build-env
           python-version: 3.11
           environment-file: recipe/env.yaml
-          use-mamba: true
+          # use-mamba: true
       - name: Build recipe
         run: |
           conda activate build-env
