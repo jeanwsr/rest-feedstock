@@ -44,13 +44,17 @@ requirements:
     # Compilers are named 'c', 'cxx', 'fortran', among others
     - {{ compiler('c') }}
     # this is necessary for all compiled recipes
-    - {{ stdlib('c') }}
+    # - {{ stdlib('c') }}
+    - {{ compiler('rust') }}
+    - hdf5
   host:
-    - python
-    - pip
-    - setuptools
+    #- python
+    #- pip
+    #- setuptools
+    - hdf5
   run:
-    - python
+    #- python
+    - hdf5
 
 # test:
 #   # Some packages might need a `test/commands` key to check CLI.
