@@ -10,6 +10,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defalts:
+      run:
+        shell: bash -l {0}
     steps:
       - uses: actions/checkout@v2
       - name: Set up Miniconda
@@ -22,7 +25,7 @@ jobs:
           # use-mamba: true
       - name: Build recipe
         run: |
-          # conda info
+          conda info
           # conda env list
           conda activate build-env
           conda-build recipe --output-folder output
