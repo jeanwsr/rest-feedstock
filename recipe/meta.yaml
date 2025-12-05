@@ -53,6 +53,7 @@ build:
     # cp ${CONDA_PREFIX}/lib/*.so ../rest_deps/lib/
     echo ${REST_EXT_DIR}
     cargo build --release --verbose --no-default-features 
+    cargo install --path . --profile release --root ${PREFIX}
   number: 0
 
 requirements:
