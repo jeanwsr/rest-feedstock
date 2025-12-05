@@ -44,6 +44,7 @@ build:
   # More info about selectors can be found in the conda-build docs: 
   # https://docs.conda.io/projects/conda-build/en/latest/resources/define-metadata.html#preprocessing-selectors
   script_env:
+    - REST_HOME="."
     - REST_EXT_DIR="${BUILD_PREFIX}/lib"
     - HDF5_DIR="${BUILD_PREFIX}"
   script: |
@@ -70,15 +71,22 @@ requirements:
     - openmpi 4
     - mokit
     - geometric
-    - sysroot_linux-64 2.17  # or sysroot_linux-aarch64 for aarch64 builds
+    - sysroot_linux-64 2.17  
   # host:
   #   #- python
   #   #- pip
   #   #- setuptools
   #   - hdf5
   run:
-    #- python
     - hdf5
+    - libcint
+    - openblas
+    - python {{ python }}
+    - libxc-c
+    - openmpi 4
+    - mokit
+    - geometric
+
 
 # test:
 #   # Some packages might need a `test/commands` key to check CLI.
