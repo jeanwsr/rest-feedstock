@@ -48,7 +48,7 @@ build:
     - REST_HOME="${SRC_DIR}"
     - REST_EXT_DIR="${SRC_DIR}/rest_deps/lib"
     - HDF5_DIR="${BUILD_PREFIX}"
-    - REST_FORTRAN_COMPILER="$F90"
+    #- REST_FORTRAN_COMPILER: $F90
   script: |
     cd rest
     mkdir ../rest_deps
@@ -58,7 +58,8 @@ build:
     # echo ${REST_EXT_DIR}
     # pwd
     # export REST_HOME=".."
-    echo ${REST_FORTRAN_COMPILER}
+    export REST_FORTRAN_COMPILER=$F90
+    echo RESTFORT${REST_FORTRAN_COMPILER}
     cargo build --release --verbose --no-default-features 
     cargo install --path . --profile release --root ${PREFIX}
   number: 0
