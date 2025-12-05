@@ -45,17 +45,18 @@ build:
   # More info about selectors can be found in the conda-build docs: 
   # https://docs.conda.io/projects/conda-build/en/latest/resources/define-metadata.html#preprocessing-selectors
   script_env:
-    #- REST_HOME=".."
-    - REST_EXT_DIR="${BUILD_PREFIX}/lib"
+    - REST_HOME="${SRC_DIR}"
+    - REST_EXT_DIR="${SRC_DIR}/rest_deps/lib"
     - HDF5_DIR="${BUILD_PREFIX}"
   script: |
     cd rest
-    # mkdir ../rest_deps
-    # mkdir ../rest_deps/lib
-    # cp ${CONDA_PREFIX}/lib/*.so ../rest_deps/lib/
-    echo ${REST_EXT_DIR}
-    pwd
-    export REST_HOME=".."
+    mkdir ../rest_deps
+    mkdir ../rest_deps/lib
+    cp ${CONDA_PREFIX}/lib/*.so ../rest_deps/lib/
+    cp ${CONDA_PREFIX}/lib/python${PY_VER}/site-packages/mokit/lib/librest2fch.so ../rest_deps/lib/
+    # echo ${REST_EXT_DIR}
+    # pwd
+    # export REST_HOME=".."
     cargo build --release --verbose --no-default-features 
     cargo install --path . --profile release --root ${PREFIX}
   number: 0
