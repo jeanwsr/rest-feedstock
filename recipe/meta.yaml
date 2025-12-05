@@ -26,12 +26,13 @@ source:
   #  `conda install openssl -c conda-forge`
   - git_url: https://gitee.com/canarias/rest.git
     git_rev: v{{ version }}
+    folder: rest
   - git_url: https://gitee.com/restgroup/rest_tensors.git
     git_rev: master
-    folder: ../rest_tensors
+    folder: rest_tensors
   - git_url: https://gitee.com/restgroup/rest_libcint.git
     git_rev: master
-    folder: ../rest_libcint
+    folder: rest_libcint
 
 build:
   # Uncomment the following line if the package is pure Python and the recipe is exactly the same for all platforms.
@@ -44,14 +45,17 @@ build:
   # More info about selectors can be found in the conda-build docs: 
   # https://docs.conda.io/projects/conda-build/en/latest/resources/define-metadata.html#preprocessing-selectors
   script_env:
-    - REST_HOME=".."
+    #- REST_HOME=".."
     - REST_EXT_DIR="${BUILD_PREFIX}/lib"
     - HDF5_DIR="${BUILD_PREFIX}"
   script: |
+    cd rest
     # mkdir ../rest_deps
     # mkdir ../rest_deps/lib
     # cp ${CONDA_PREFIX}/lib/*.so ../rest_deps/lib/
     echo ${REST_EXT_DIR}
+    pwd
+    export REST_HOME=".."
     cargo build --release --verbose --no-default-features 
     cargo install --path . --profile release --root ${PREFIX}
   number: 0
