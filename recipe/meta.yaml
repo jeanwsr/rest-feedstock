@@ -61,7 +61,7 @@ build:
     export REST_FORTRAN_COMPILER=$F90
     echo RESTFORT${REST_FORTRAN_COMPILER}
     cargo build --release --verbose --no-default-features 
-    cargo install --path . --profile release --root ${PREFIX}
+    cargo install --path . --profile release --root ${PREFIX} --no-default-features
   number: 0
 
 requirements:
