@@ -66,7 +66,7 @@ requirements:
     - python
     - libxc-c
     - openmpi
-    - mokit/label/cf::mokit
+    - mokit
   # host:
   #   #- python
   #   #- pip
