@@ -28,7 +28,7 @@ source:
     git_rev: v{{ version }}
   - git_url: https://gitee.com/restgroup/rest_tensors.git
     git_rev: master
-    floder: ../rest_tensors
+    folder: ../rest_tensors
   - git_url: https://gitee.com/restgroup/rest_libcint.git
     git_rev: master
     folder: ../rest_libcint
