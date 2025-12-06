@@ -110,8 +110,9 @@ requirements:
 test:
   script_env:
     - REST_HOME="${SRC_DIR}"
-    - REST_EXT_DIR="${PREFIX}/lib"
+    - REST_EXT_DIR="${BUILD_PREFIX}/lib"
   source_files:
+    - rest/basis-set-pool
     - rest_regression
   # Some packages might need a `test/commands` key to check CLI.
   # List all the packages/modules that `run_test.py` imports.
@@ -126,7 +127,11 @@ test:
   commands: |
     cd rest_regression
     cargo install --path . --profile release --root .
-    ./bin/rest_regression -r ./bench_pool -p rest
+    which rest
+    echo $REST_EXT_DIR
+    echo $REST_HOME
+    echo ${BUILD_PREFIX}
+    ./bin/rest_regression -r ./bench_pool -p ${BUILD_PREFIX}/bin/rest
 
 about:
   home: https://gitee.com/restgroup/rest
