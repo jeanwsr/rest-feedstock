@@ -125,7 +125,7 @@ test:
   #   - pip
   commands: |
     cd rest_regression
-    cargo install --path . --release --root .
+    cargo install --path . --profile release --root .
     ./bin/rest_regression -r ./bench_pool -p rest
 
 about:
