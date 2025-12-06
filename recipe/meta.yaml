@@ -121,7 +121,7 @@ test:
   # failing.
   # requires:
   #   - pip
-  script: |
+  commands: |
     cd rest_regression
     cargo build --release
     ../target/release/rest_regression -r ./bench_pool -p rest
