@@ -28,7 +28,7 @@ jobs:
           conda info
           # conda env list
           conda activate build-env
-          conda-build recipe --output-folder output -c conda-forge -c mokit/label/cf --test
+          conda-build recipe --output-folder output -c conda-forge -c mokit/label/cf
           # conda-build --test output/*/*tar.bz2
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
