@@ -113,18 +113,16 @@ requirements:
 #   commands:
 #     - pip check
 
-# about:
-#   home: https://github.com/simplejson/simplejson
-#   summary: 'Simple, fast, extensible JSON encoder/decoder for Python'
-#   description: |
-#     simplejson is a simple, fast, complete, correct and extensible
-#     JSON <https://json.org> encoder and decoder for Python 2.5+ and
-#     Python 3.3+. It is pure Python code with no dependencies, but includes
-#     an optional C extension for a serious speed boost.
+about:
+  home: https://gitee.com/restgroup/rest
+  summary: 'Rust-based Electronic-Structure Toolkit (REST), aiming at an efficient computational platform for state-of-the-art DFT and WFT methods.'
+  description: |
+    Rust-based Electronic-Structure Toolkit (REST), 
+    aiming at an efficient computational platform for state-of-the-art DFT and WFT methods.
 #   # Remember to specify the license variants for BSD, Apache, GPL, and LGPL.
 #   # Use the SPDX identifier, e.g: GPL-2.0-only instead of GNU General Public License version 2.0
 #   # See https://spdx.org/licenses/
-#   license: MIT
+  license: GPL-2.0-only
 #   # The license_family, i.e. "BSD" if license is "BSD-3-Clause". 
 #   # Optional
 #   license_family: MIT
@@ -137,9 +135,8 @@ requirements:
 #   doc_url: https://simplejson.readthedocs.io/
 #   dev_url: https://github.com/simplejson/simplejson
 
-# extra:
-#   recipe-maintainers:
-#     # GitHub IDs for maintainers of the recipe.
-#     # Always check with the people listed below if they are OK becoming maintainers of the recipe. (There will be spam!)
-#     - LisaSimpson
-#     - LandoCalrissian
+extra:
+  recipe-maintainers:
+    # GitHub IDs for maintainers of the recipe.
+    # Always check with the people listed below if they are OK becoming maintainers of the recipe. (There will be spam!)
+    - jeanwsr
