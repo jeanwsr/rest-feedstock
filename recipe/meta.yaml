@@ -66,12 +66,11 @@ build:
     # export REST_HOME=".."
     export REST_FORTRAN_COMPILER=$F90
     echo RESTFORT${REST_FORTRAN_COMPILER}
-    # cargo build --release --verbose --no-default-features --target=x86_64-unknown-linux-gnu
-    cargo install --path . --profile release --root ${PREFIX} --no-default-features
+    # cargo build --release --verbose --target=x86_64-unknown-linux-gnu
+    cargo install --path . --profile release --root ${PREFIX} 
     cp ../rest_deps/lib/librestmatr.so ${PREFIX}/lib/
     cp ../rest_deps/lib/librest2fch.so ${PREFIX}/lib/
     # todo: remove the manual copy
-  number: 0
 
 requirements:
   build:
@@ -90,6 +89,8 @@ requirements:
     - openmpi 4
     - mokit
     - geometric
+    - simple-dftd3
+    - dftd4
     #- sysroot_linux-64 2.17  
   # host:
   #   #- python
@@ -105,6 +106,8 @@ requirements:
     - openmpi 4
     - mokit
     - geometric
+    - simple-dftd3
+    - dftd4
 
 
 test:
