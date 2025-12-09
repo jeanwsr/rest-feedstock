@@ -20,6 +20,11 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install tools
         run: |
+          # Replace deb.debian.org with archive.debian.org for buster
+          sed -i 's/deb.debian.org/archive.debian.org/g' /etc/apt/sources.list
+          sed -i 's|security.debian.org|archive.debian.org/debian-security/|g' /etc/apt/sources.list
+          # Also update for buster/updates
+          sed -i '/buster\/updates/d' /etc/apt/sources.list || true
           apt-get update
           apt-get install -y git
       - name: Set up Miniconda
