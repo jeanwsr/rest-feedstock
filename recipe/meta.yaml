@@ -68,6 +68,7 @@ build:
     echo RESTFORT${REST_FORTRAN_COMPILER}
     export CFLAGS="--sysroot=${CONDA_BUILD_SYSROOT}"
     export CXXFLAGS="--sysroot=${CONDA_BUILD_SYSROOT}"
+    export RUSTFLAGS="-C link-args=--sysroot=${CONDA_BUILD_SYSROOT}"
     # cargo build --release --verbose --target=x86_64-unknown-linux-gnu
     cargo install --path . --profile release --root ${PREFIX}
     mkdir -p ${PREFIX}/share/rest/
