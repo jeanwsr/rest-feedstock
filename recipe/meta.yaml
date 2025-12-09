@@ -36,7 +36,7 @@ source:
     git_rev: master
     folder: rest_libcint
   - git_url: https://gitee.com/restgroup/rest_regression.git
-    git_rev: master
+    git_rev: af3223852d5c240c004ef200c5d1fb0270df2267
     folder: rest_regression
 
 build:
