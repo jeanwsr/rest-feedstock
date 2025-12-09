@@ -31,7 +31,10 @@ jobs:
           conda-build recipe --output-folder output -c conda-forge -c mokit/label/cf
           # conda-build --test output/*/*tar.bz2
       - name: Upload artifacts
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: rest-conda-package
-          path: output/*/*tar.bz2
+          path: 
+            - output/*/*tar.bz2
+            - rest_regression/
