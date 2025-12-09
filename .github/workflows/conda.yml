@@ -17,6 +17,9 @@ jobs:
         shell: bash -l {0}
     steps:
       - uses: actions/checkout@v2
+      - name: Install tools
+        run: |
+          which git
       - name: Set up Miniconda
         uses: conda-incubator/setup-miniconda@v3
         with:
@@ -25,10 +28,6 @@ jobs:
           python-version: 3.11
           environment-file: recipe/env.yaml
           # use-mamba: true
-      - name: Install tools
-        run: |
-          apt-get update
-          apt-get install -y git
       - name: Build recipe
         run: |
           conda info
