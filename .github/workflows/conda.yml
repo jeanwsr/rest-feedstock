@@ -25,6 +25,9 @@ jobs:
           python-version: 3.11
           environment-file: recipe/env.yaml
           # use-mamba: true
+      - name: Install tools
+        run: |
+          apt-get install -y git
       - name: Build recipe
         run: |
           conda info
@@ -43,7 +46,7 @@ jobs:
   build-oldkernel:
     runs-on: ubuntu-latest
     container: 
-      image: centos:7.6.1810
+      image: debian:9
     defaults:
       run:
         shell: bash -l {0}
@@ -57,6 +60,9 @@ jobs:
           python-version: 3.11
           environment-file: recipe_oldkern/env.yaml
           # use-mamba: true
+      - name: Install tools
+        run: |
+          apt-get install -y git
       - name: Build recipe
         run: |
           conda info
