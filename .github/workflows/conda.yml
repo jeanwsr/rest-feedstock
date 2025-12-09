@@ -9,7 +9,9 @@ on:
       - main
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
+    container: 
+      image: debian:10
     defaults:
       run:
         shell: bash -l {0}
@@ -35,5 +37,36 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: rest-conda-package
+          path:  
+            output/*/*tar.bz2
+  
+  build-oldkernel:
+    runs-on: ubuntu-latest
+    container: 
+      image: centos:7.6.1810
+    defaults:
+      run:
+        shell: bash -l {0}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          auto-update-conda: true
+          activate-environment: build-env
+          python-version: 3.11
+          environment-file: recipe_oldkern/env.yaml
+          # use-mamba: true
+      - name: Build recipe
+        run: |
+          conda info
+          # conda env list
+          conda activate build-env
+          conda-build recipe_oldkern --output-folder output -c conda-forge -c mokit/label/cf
+      - name: Upload artifacts
+        #if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rest-conda-package-oldkernel
           path:  
             output/*/*tar.bz2
