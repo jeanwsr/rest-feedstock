@@ -35,6 +35,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: rest-conda-package
-          path: 
-            - output/*/*tar.bz2
-            - rest_regression/
+          path: | 
+            output/*/*tar.bz2
+            rest_regression/
