@@ -1,5 +1,11 @@
 # REST feedstock
 
+## REST components
+
+Currently include executable `rest` only. No `rest_regression`.
+
+Basis sets are placed at `$CONDA_PREFIX/share/rest`.
+
 ## Support for dependencies
 
 ### MPI
@@ -15,4 +21,4 @@ todo: test openmpi 5.
 
 ## Math Library
 
-Currently we use openblas. And it's default is pthreads. Should we use openmp?
+Currently we use openblas-openmp.
