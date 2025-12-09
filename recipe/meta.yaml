@@ -55,7 +55,6 @@ build:
     - REST_EXT_DIR="${SRC_DIR}/rest_deps/lib"
     - HDF5_DIR="${BUILD_PREFIX}"
     #- REST_FORTRAN_COMPILER: $F90
-    - RUSTFLAGS="-C target-feature=-crt-static -C link-self-contained=yes"
   script: |
     cd rest
     mkdir ../rest_deps
@@ -67,6 +66,7 @@ build:
     # export REST_HOME=".."
     export REST_FORTRAN_COMPILER=$F90
     echo RESTFORT${REST_FORTRAN_COMPILER}
+    export RUSTFLAGS="-C target-feature=-crt-static -C link-self-contained=yes"
     # cargo build --release --verbose --target=x86_64-unknown-linux-gnu
     cargo install --path . --profile release --root ${PREFIX}
     mkdir -p ${PREFIX}/share/rest/
