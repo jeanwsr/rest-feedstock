@@ -59,13 +59,14 @@ build:
     cd rest
     mkdir ../rest_deps
     mkdir ../rest_deps/lib
-    cp ${CONDA_PREFIX}/lib/*.so ../rest_deps/lib/
-    cp ${CONDA_PREFIX}/lib/python${PY_VER}/site-packages/mokit/lib/librest2fch.so ../rest_deps/lib/
+    cp ${BUILD_PREFIX}/lib/*.so ../rest_deps/lib/
+    cp ${BUILD_PREFIX}/lib/python${PY_VER}/site-packages/mokit/lib/librest2fch.so ../rest_deps/lib/
     # echo ${REST_EXT_DIR}
     # pwd
     # export REST_HOME=".."
     export REST_FORTRAN_COMPILER=$F90
     echo RESTFORT${REST_FORTRAN_COMPILER}
+    export LIBCLANG_PATH="$BUILD_PREFIX/lib"
     export CFLAGS="--sysroot=${CONDA_BUILD_SYSROOT}"
     export CXXFLAGS="--sysroot=${CONDA_BUILD_SYSROOT}"
     export RUSTFLAGS="-C link-args=--sysroot=${CONDA_BUILD_SYSROOT}"
@@ -89,6 +90,7 @@ requirements:
     # this is necessary for all compiled recipes
     # - {{ stdlib('c') }}
     - {{ compiler('rust') }}
+    - libclang
     - hdf5
     - libcint
     - openblas * openmp*
