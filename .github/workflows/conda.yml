@@ -8,56 +8,13 @@ on:
     branches:
       - main
 jobs:
-    # build:
-    # runs-on: ubuntu-latest
-    # defaults:
-    #   run:
-    #     shell: bash -l {0}
-    # steps:
-    #   - uses: actions/checkout@v2
-    #   - name: Set up Miniconda
-    #     uses: conda-incubator/setup-miniconda@v3
-    #     with:
-    #       auto-update-conda: true
-    #       activate-environment: build-env
-    #       python-version: 3.11
-    #       environment-file: recipe/env.yaml
-    #       # use-mamba: true
-    #   - name: Build recipe
-    #     run: |
-    #       conda info
-    #       # conda env list
-    #       conda activate build-env
-    #       conda-build recipe --output-folder output -c conda-forge -c mokit/label/cf
-    #       # conda-build --test output/*/*tar.bz2
-    #   - name: Upload artifacts
-    #     #if: always()
-    #     uses: actions/upload-artifact@v4
-    #     with:
-    #       name: rest-conda-package
-    #       path:  
-    #         output/*/*tar.bz2
-
-  build-debian10:
+  build-default-sysroot228:
     runs-on: ubuntu-latest
-    container: 
-      image: debian:10
-      options: --user root
     defaults:
       run:
         shell: bash -l {0}
     steps:
       - uses: actions/checkout@v2
-      - name: Install tools
-        run: |
-          # Completely replace sources.list with proper archive URLs
-          cat > /etc/apt/sources.list << 'EOF'
-          deb http://archive.debian.org/debian buster main contrib non-free
-          deb http://archive.debian.org/debian buster-updates main contrib non-free
-          deb http://archive.debian.org/debian-security buster/updates main contrib non-free
-          EOF
-          apt-get update
-          apt-get install -y git gcc g++ make libclang-dev
       - name: Set up Miniconda
         uses: conda-incubator/setup-miniconda@v3
         with:
@@ -78,6 +35,49 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: rest-conda-package
+          path:  
+            output/*/*tar.bz2
+
+  build-debian10-sysroot228:
+    runs-on: ubuntu-latest
+    container: 
+      image: debian:10
+      options: --user root
+    defaults:
+      run:
+        shell: bash -l {0}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install tools
+        run: |
+          # Completely replace sources.list with proper archive URLs
+          cat > /etc/apt/sources.list << 'EOF'
+          deb http://archive.debian.org/debian buster main contrib non-free
+          deb http://archive.debian.org/debian buster-updates main contrib non-free
+          deb http://archive.debian.org/debian-security buster/updates main contrib non-free
+          EOF
+          apt-get update
+          apt-get install -y git make libclang-dev
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          auto-update-conda: true
+          activate-environment: build-env
+          python-version: 3.11
+          environment-file: recipe/env.yaml
+          # use-mamba: true
+      - name: Build recipe
+        run: |
+          conda info
+          # conda env list
+          conda activate build-env
+          conda-build recipe --output-folder output -c conda-forge -c mokit/label/cf
+          # conda-build --test output/*/*tar.bz2
+      - name: Upload artifacts
+        #if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rest-conda-package-debian10
           path:  
             output/*/*tar.bz2
   
