@@ -40,7 +40,7 @@ source:
     folder: rest_regression
 
 build:
-  number: 5
+  number: 6
   # Uncomment the following line if the package is pure Python and the recipe is exactly the same for all platforms.
   # It is okay if the dependencies are not built for all platforms/versions, although selectors are still not allowed.
   # See https://conda-forge.org/docs/maintainer/knowledge_base.html#noarch-python for more details.
@@ -92,6 +92,8 @@ requirements:
     # - {{ stdlib('c') }}
     - {{ compiler('rust') }}
     - libclang
+    # - sysroot_linux-64 2.17  
+  host:
     - hdf5
     - libcint
     - openblas * openmp*
@@ -102,12 +104,6 @@ requirements:
     - geometric
     - simple-dftd3
     - dftd4
-    # - sysroot_linux-64 2.17  
-  # host:
-  #   #- python
-  #   #- pip
-  #   #- setuptools
-  #   - hdf5
   run:
     - hdf5
     - libcint
@@ -122,6 +118,8 @@ requirements:
 
 
 test:
+  requires:
+    - {{ compiler('rust') }}
   script_env:
     - REST_HOME="${SRC_DIR}"
     - REST_EXT_DIR="${PREFIX}/lib"

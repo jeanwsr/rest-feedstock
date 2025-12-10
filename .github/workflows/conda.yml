@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
+  # pull_request:
+  #   branches:
+  #     - main
 jobs:
   build-default-sysroot228:
     runs-on: ubuntu-22.04
@@ -37,11 +37,11 @@ jobs:
           name: rest-conda-package
           path:  
             output/*/*tar.bz2
-      - name: Upload to Anaconda.org
-        env:
-          ANACONDA_API_TOKEN: ${{ secrets.ANACONDA }}
-        run: |
-          anaconda -t $ANACONDA_API_TOKEN upload ./output/*/*.tar.bz2 --skip-existing 
+      # - name: Upload to Anaconda.org
+      #   env:
+      #     ANACONDA_API_TOKEN: ${{ secrets.ANACONDA }}
+      #   run: |
+      #     anaconda -t $ANACONDA_API_TOKEN upload ./output/*/*.tar.bz2 --skip-existing 
 
   build-debian10-sysroot228:
     runs-on: ubuntu-22.04
@@ -85,6 +85,11 @@ jobs:
           name: rest-conda-package-debian10
           path:  
             output/*/*tar.bz2
+      - name: Upload to Anaconda.org
+        env:
+          ANACONDA_API_TOKEN: ${{ secrets.ANACONDA }}
+        run: |
+          anaconda -t $ANACONDA_API_TOKEN upload ./output/*/*.tar.bz2 --skip-existing 
   
   build-debian10-sysroot217:
     runs-on: ubuntu-22.04
