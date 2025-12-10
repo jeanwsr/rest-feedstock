@@ -40,7 +40,7 @@ source:
     folder: rest_regression
 
 build:
-  number: 6
+  number: 7
   # Uncomment the following line if the package is pure Python and the recipe is exactly the same for all platforms.
   # It is okay if the dependencies are not built for all platforms/versions, although selectors are still not allowed.
   # See https://conda-forge.org/docs/maintainer/knowledge_base.html#noarch-python for more details.
@@ -70,8 +70,10 @@ build:
     export GCC_INCLUDE="${BUILD_PREFIX}/lib/gcc/x86_64-conda-linux-gnu/15.2.0/include/"
     export CFLAGS="--sysroot=${CONDA_BUILD_SYSROOT} -I${GCC_INCLUDE} -I${CONDA_BUILD_SYSROOT}/usr/include"
     export CXXFLAGS="--sysroot=${CONDA_BUILD_SYSROOT} -I${GCC_INCLUDE} -I${CONDA_BUILD_SYSROOT}/usr/include"
+    export LDFLAGS="--sysroot=${CONDA_BUILD_SYSROOT}"
     export RUSTFLAGS="-C link-args=--sysroot=${CONDA_BUILD_SYSROOT}"
     export BINDGEN_EXTRA_CLANG_ARGS="--sysroot=$CONDA_BUILD_SYSROOT -I${GCC_INCLUDE} -I${CONDA_BUILD_SYSROOT}/usr/include"
+    echo $LDFLAGS
     # cargo build --release --verbose --target=x86_64-unknown-linux-gnu
     cargo install --path . --profile release --root ${PREFIX}
     mkdir -p ${PREFIX}/share/rest/
@@ -129,7 +131,8 @@ requirements:
 
 test:
   requires:
-    - {{ compiler('rust') }}
+    # - {{ compiler('rust') }}
+    - restgroup::rest-regression
   script_env:
     - REST_HOME="${SRC_DIR}"
     - REST_EXT_DIR="${PREFIX}/lib"
@@ -149,12 +152,12 @@ test:
   commands: |
     set -eux
     cd rest_regression
-    cargo install --path . --profile release --root .
+    # cargo install --path . --profile release --root .
     which rest
     echo ${REST_EXT_DIR}
     echo ${REST_HOME}
     echo ${PREFIX}
-    ./bin/rest_regression -r ./bench_pool -p ${PREFIX}/bin/rest
+    ${PREFIX}/bin/rest_regression -r ./bench_pool -p ${PREFIX}/bin/rest
     cat ./work_pool/HI_RHF_GRAD.log
 
 about:
