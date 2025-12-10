@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - main
+    paths:
+      - .github/workflows/conda.yml
+      - recipe/**
+      - recipe_oldkern/**
   # pull_request:
   #   branches:
   #     - main
