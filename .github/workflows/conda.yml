@@ -62,7 +62,7 @@ jobs:
           deb http://archive.debian.org/debian-security buster/updates main contrib non-free
           EOF
           apt-get update
-          apt-get install -y git make libclang-dev
+          apt-get install -y git make
       - name: Set up Miniconda
         uses: conda-incubator/setup-miniconda@v3
         with:
@@ -105,7 +105,7 @@ jobs:
           deb http://archive.debian.org/debian-security buster/updates main contrib non-free
           EOF
           apt-get update
-          apt-get install -y git make libclang-dev
+          apt-get install -y git make
       - name: Set up Miniconda
         uses: conda-incubator/setup-miniconda@v3
         with:

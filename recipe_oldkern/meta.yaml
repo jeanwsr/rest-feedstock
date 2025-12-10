@@ -66,10 +66,12 @@ build:
     # export REST_HOME=".."
     export REST_FORTRAN_COMPILER=$F90
     echo RESTFORT${REST_FORTRAN_COMPILER}
-    export CFLAGS="--sysroot=${CONDA_BUILD_SYSROOT}"
-    export CXXFLAGS="--sysroot=${CONDA_BUILD_SYSROOT}"
+    export LIBCLANG_PATH="$BUILD_PREFIX/lib"
+    export GCC_INCLUDE="${BUILD_PREFIX}/lib/gcc/*/*/include/"
+    export CFLAGS="--sysroot=${CONDA_BUILD_SYSROOT} -I${GCC_INCLUDE} -I${CONDA_BUILD_SYSROOT}/usr/include"
+    export CXXFLAGS="--sysroot=${CONDA_BUILD_SYSROOT} -I${GCC_INCLUDE} -I${CONDA_BUILD_SYSROOT}/usr/include"
     export RUSTFLAGS="-C link-args=--sysroot=${CONDA_BUILD_SYSROOT}"
-    export BINDGEN_EXTRA_CLANG_ARGS="--sysroot=$CONDA_BUILD_SYSROOT"
+    export BINDGEN_EXTRA_CLANG_ARGS="--sysroot=$CONDA_BUILD_SYSROOT -I${GCC_INCLUDE} -I${CONDA_BUILD_SYSROOT}/usr/include"
     # cargo build --release --verbose --target=x86_64-unknown-linux-gnu
     cargo install --path . --profile release --root ${PREFIX}
     mkdir -p ${PREFIX}/share/rest/
@@ -89,6 +91,7 @@ requirements:
     # this is necessary for all compiled recipes
     # - {{ stdlib('c') }}
     - {{ compiler('rust') }}
+    - libclang
     - hdf5
     - libcint
     - openblas * openmp*
