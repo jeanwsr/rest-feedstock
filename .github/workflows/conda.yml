@@ -28,7 +28,7 @@ jobs:
           conda info
           # conda env list
           conda activate build-env
-          conda-build recipe --output-folder output -c conda-forge -c mokit/label/cf -c restgroup
+          conda-build recipe --output-folder output -c conda-forge -c mokit/label/cf
           # conda-build --test output/*/*tar.bz2
       - name: Upload artifacts
         #if: always()
@@ -76,7 +76,7 @@ jobs:
           conda info
           # conda env list
           conda activate build-env
-          conda-build recipe --output-folder output -c conda-forge -c mokit/label/cf -c restgroup
+          conda-build recipe --output-folder output -c conda-forge -c mokit/label/cf
           # conda-build --test output/*/*tar.bz2
       - name: Upload artifacts
         #if: always()
@@ -127,7 +127,7 @@ jobs:
           conda info
           # conda env list
           conda activate build-env
-          conda-build recipe_oldkern --output-folder output -c conda-forge -c mokit/label/cf -c restgroup
+          conda-build recipe_oldkern --output-folder output -c conda-forge -c mokit/label/cf
       - name: Upload artifacts
         #if: always()
         uses: actions/upload-artifact@v4

@@ -132,7 +132,7 @@ requirements:
 test:
   requires:
     # - {{ compiler('rust') }}
-    - rest-regression
+    - restgroup::rest_regression
   script_env:
     - REST_HOME="${SRC_DIR}"
     - REST_EXT_DIR="${PREFIX}/lib"
