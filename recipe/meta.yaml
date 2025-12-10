@@ -67,7 +67,7 @@ build:
     export REST_FORTRAN_COMPILER=$F90
     echo RESTFORT${REST_FORTRAN_COMPILER}
     export LIBCLANG_PATH="$BUILD_PREFIX/lib"
-    export GCC_INCLUDE="${BUILD_PREFIX}/lib/gcc/*/*/include/"
+    export GCC_INCLUDE="${BUILD_PREFIX}/lib/gcc/x86_64-conda-linux-gnu/15.2.0/include/"
     export CFLAGS="--sysroot=${CONDA_BUILD_SYSROOT} -I${GCC_INCLUDE} -I${CONDA_BUILD_SYSROOT}/usr/include"
     export CXXFLAGS="--sysroot=${CONDA_BUILD_SYSROOT} -I${GCC_INCLUDE} -I${CONDA_BUILD_SYSROOT}/usr/include"
     export RUSTFLAGS="-C link-args=--sysroot=${CONDA_BUILD_SYSROOT}"
