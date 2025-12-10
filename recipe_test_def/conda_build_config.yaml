@@ -1,0 +1,4 @@
+python:
+  - 3.11
+c_stdlib_version:
+  - 2.28
