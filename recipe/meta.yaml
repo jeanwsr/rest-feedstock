@@ -132,7 +132,7 @@ requirements:
 test:
   requires:
     # - {{ compiler('rust') }}
-    - restgroup::rest-regression
+    - rest-regression
   script_env:
     - REST_HOME="${SRC_DIR}"
     - REST_EXT_DIR="${PREFIX}/lib"
@@ -158,7 +158,7 @@ test:
     echo ${REST_HOME}
     echo ${PREFIX}
     ${PREFIX}/bin/rest_regression -r ./bench_pool -p ${PREFIX}/bin/rest
-    cat ./work_pool/HI_RHF_GRAD.log
+    # cat ./work_pool/HI_RHF_GRAD.log
 
 about:
   home: https://gitee.com/restgroup/rest

@@ -130,7 +130,8 @@ requirements:
 
 test:
   requires:
-    - {{ compiler('rust') }}
+    # - {{ compiler('rust') }}
+    - rest-regression
   script_env:
     - REST_HOME="${SRC_DIR}"
     - REST_EXT_DIR="${PREFIX}/lib"
@@ -150,13 +151,12 @@ test:
   commands: |
     set -eux
     cd rest_regression
-    cargo install --path . --profile release --root .
+    # cargo install --path . --profile release --root .
     which rest
     echo ${REST_EXT_DIR}
     echo ${REST_HOME}
     echo ${PREFIX}
-    ./bin/rest_regression -r ./bench_pool -p ${PREFIX}/bin/rest
-    cat ./work_pool/HI_RHF_GRAD.log
+    ${PREFIX}/bin/rest_regression -r ./bench_pool -p ${PREFIX}/bin/rest
 
 about:
   home: https://gitee.com/restgroup/rest
