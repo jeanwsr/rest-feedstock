@@ -71,7 +71,7 @@ build:
     export CFLAGS="--sysroot=${CONDA_BUILD_SYSROOT} -I${GCC_INCLUDE} -I${CONDA_BUILD_SYSROOT}/usr/include"
     export CXXFLAGS="--sysroot=${CONDA_BUILD_SYSROOT} -I${GCC_INCLUDE} -I${CONDA_BUILD_SYSROOT}/usr/include"
     export LDFLAGS="--sysroot=${CONDA_BUILD_SYSROOT}"
-    export RUSTFLAGS="--sysroot=${CONDA_BUILD_SYSROOT} --verbose -C link-arg=-lc_noshared -C link-arg=-Wl,--verbose"
+    export RUSTFLAGS="--verbose -C link-arg=--sysroot=${CONDA_BUILD_SYSROOT} -C link-arg=-lc_noshared -C link-arg=--verbose -C link-arg=-Wl,--verbose"
     export BINDGEN_EXTRA_CLANG_ARGS="--sysroot=$CONDA_BUILD_SYSROOT -I${GCC_INCLUDE} -I${CONDA_BUILD_SYSROOT}/usr/include"
     echo $LDFLAGS
     # cargo build --release --verbose --target=x86_64-unknown-linux-gnu
