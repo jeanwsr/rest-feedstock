@@ -56,6 +56,7 @@ build:
     - HDF5_DIR="${BUILD_PREFIX}"
     #- REST_FORTRAN_COMPILER: $F90
   script: |
+    set -eux
     cd rest
     mkdir ../rest_deps
     mkdir ../rest_deps/lib
@@ -74,6 +75,7 @@ build:
     export RUSTFLAGS="--verbose -C link-arg=--sysroot=${CONDA_BUILD_SYSROOT} -C link-arg=-L${CONDA_BUILD_SYSROOT}/usr/lib -C link-arg=-B${CONDA_BUILD_SYSROOT}/usr/lib  -C link-arg=--verbose -C link-arg=-Wl,--verbose"
     export BINDGEN_EXTRA_CLANG_ARGS="--sysroot=$CONDA_BUILD_SYSROOT -I${GCC_INCLUDE} -I${CONDA_BUILD_SYSROOT}/usr/include"
     echo $LDFLAGS
+    ls ${CONDA_BUILD_SYSROOT}/usr/lib
     # cargo build --release --verbose --target=x86_64-unknown-linux-gnu
     cargo install -v --path . --profile release --root ${PREFIX}
     mkdir -p ${PREFIX}/share/rest/
