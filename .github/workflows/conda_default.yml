@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - test_def
+      - test_rat
     # paths:
     #   - .github/workflows/conda.yml
     #   - recipe/**
@@ -24,7 +25,7 @@ jobs:
           auto-update-conda: true
           activate-environment: build-env
           python-version: 3.11
-          environment-file: recipe/env.yaml
+          environment-file: recipe_test_def/env.yaml
           # use-mamba: true
       - name: Build recipe
         run: |
