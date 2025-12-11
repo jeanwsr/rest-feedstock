@@ -107,6 +107,7 @@ requirements:
     - simple-dftd3
     - dftd4
     - sysroot_linux-64 2.28
+    - lld
   host:
     - hdf5
     - libcint
