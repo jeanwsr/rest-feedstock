@@ -3,4 +3,4 @@ python:
 c_stdlib_version:
   - 2.28
 rust_compiler_version:
-  - "1.89"
+  - "1.91"
