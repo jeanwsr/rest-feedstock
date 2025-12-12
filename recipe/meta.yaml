@@ -40,7 +40,7 @@ source:
     folder: rest_regression
 
 build:
-  number: 0
+  number: 1
   # Uncomment the following line if the package is pure Python and the recipe is exactly the same for all platforms.
   # It is okay if the dependencies are not built for all platforms/versions, although selectors are still not allowed.
   # See https://conda-forge.org/docs/maintainer/knowledge_base.html#noarch-python for more details.
@@ -102,8 +102,8 @@ requirements:
     - openmpi 4
     - mokit
     - geometric
-    - simple-dftd3
-    - dftd4
+    - simple-dftd3 1.2.*
+    - dftd4 3.7.*
     - sysroot_linux-64 2.28
   host:
     - hdf5
@@ -114,8 +114,8 @@ requirements:
     - openmpi 4
     - mokit
     - geometric
-    - simple-dftd3
-    - dftd4
+    - simple-dftd3 1.2.*
+    - dftd4 3.7.*
   run:
     - hdf5
     - libcint
@@ -125,8 +125,8 @@ requirements:
     - openmpi 4
     - mokit
     - geometric
-    - simple-dftd3
-    - dftd4
+    - simple-dftd3 1.2.*
+    - dftd4 3.7.*
 
 
 test:
