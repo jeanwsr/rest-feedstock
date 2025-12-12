@@ -72,7 +72,7 @@ build:
     export CFLAGS="--sysroot=${CONDA_BUILD_SYSROOT} -I${GCC_INCLUDE} -I${CONDA_BUILD_SYSROOT}/usr/include"
     export CXXFLAGS="--sysroot=${CONDA_BUILD_SYSROOT} -I${GCC_INCLUDE} -I${CONDA_BUILD_SYSROOT}/usr/include"
     export LDFLAGS="--sysroot=${CONDA_BUILD_SYSROOT}"
-    export RUSTFLAGS="--verbose -C link-arg=--sysroot=${CONDA_BUILD_SYSROOT} -C link-arg=-L${CONDA_BUILD_SYSROOT}/usr/lib -C link-arg=-B${CONDA_BUILD_SYSROOT}/usr/lib  -C link-arg=--verbose -C link-arg=-Wl,--verbose"
+    export RUSTFLAGS="--verbose -C link-arg=--sysroot=${CONDA_BUILD_SYSROOT} -C link-arg=-Wl,--dynamic-linker=${CONDA_BUILD_SYSROOT}/lib64/ld-linux-x86-64.so.2 -C link-arg=--verbose -C link-arg=-Wl,--verbose"
     export BINDGEN_EXTRA_CLANG_ARGS="--sysroot=$CONDA_BUILD_SYSROOT -I${GCC_INCLUDE} -I${CONDA_BUILD_SYSROOT}/usr/include"
     echo $LDFLAGS
     ls ${CONDA_BUILD_SYSROOT}/usr/lib
