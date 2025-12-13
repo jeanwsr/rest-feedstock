@@ -44,5 +44,5 @@ jobs:
         env:
           ANACONDA_API_KEY: ${{ secrets.ANACONDA }}
         run: |
-          rattler-build upload anaconda -o restgroup ./output/*/* --skip-existing --label rat
+          rattler-build upload anaconda -o restgroup ./output/*/*.conda --label rat
 

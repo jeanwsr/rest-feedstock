@@ -147,7 +147,7 @@ tests:
         - restgroup::rest_regression
     files:
       source:
-        - rest/basis-set-pool
+        # - rest/basis-set-pool
         - rest_regression
   # Some packages might need a `test/commands` key to check CLI.
   # List all the packages/modules that `run_test.py` imports.
