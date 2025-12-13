@@ -3,7 +3,6 @@ name: Build REST
 on:
   push:
     branches:
-      - test_def
       - test_rat
     # paths:
     #   - .github/workflows/conda.yml
@@ -12,7 +11,7 @@ on:
   #   branches:
   #     - main
 jobs:
-  build-default-sysroot228:
+  build-default-sysroot217:
     runs-on: ubuntu-22.04
     defaults:
       run:
@@ -25,19 +24,25 @@ jobs:
           auto-update-conda: true
           activate-environment: build-env
           python-version: 3.11
-          environment-file: recipe_test_def/env.yaml
+          environment-file: recipe_rattler/env.yaml
           # use-mamba: true
       - name: Build recipe
         run: |
           conda info
           # conda env list
           conda activate build-env
-          conda-build recipe_test_def --output-folder output -c conda-forge -c mokit/label/cf
+          rattler-build build --recipe recipe_rattler --output-dir output -c conda-forge -c mokit/label/cf -c restgroup
           # conda-build --test output/*/*tar.bz2
       - name: Upload artifacts
         #if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: rest-conda-package
+          name: rest-conda-package-rattler
           path:  
-            output/*/*tar.bz2
+            output/*/*
+      - name: Upload to Anaconda.org
+        env:
+          ANACONDA_API_KEY: ${{ secrets.ANACONDA }}
+        run: |
+          rattler-build upload anaconda -o restgroup ./output/*/* --skip-existing --label rat
+
