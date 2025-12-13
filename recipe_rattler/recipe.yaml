@@ -58,7 +58,7 @@ build:
       REST_EXT_DIR: "${SRC_DIR}/rest_deps/lib"
       HDF5_DIR: "${BUILD_PREFIX}"
     content: |
-      set -eux
+      set -ex
       cd rest
       mkdir ../rest_deps
       mkdir ../rest_deps/lib
