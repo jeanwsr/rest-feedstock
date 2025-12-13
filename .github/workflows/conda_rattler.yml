@@ -3,10 +3,10 @@ name: Build REST
 on:
   push:
     branches:
-      - test_rat
-    # paths:
-    #   - .github/workflows/conda.yml
-    #   - recipe/**
+      - main
+    paths:
+      - .github/workflows/conda_rattler.yml
+      - recipe_rattler/**
   # pull_request:
   #   branches:
   #     - main
@@ -44,5 +44,5 @@ jobs:
         env:
           ANACONDA_API_KEY: ${{ secrets.ANACONDA }}
         run: |
-          rattler-build upload anaconda -o restgroup ./output/*/*.conda --label rat
+          rattler-build upload anaconda -o restgroup -c rat ./output/*/*.conda
 
