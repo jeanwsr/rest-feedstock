@@ -8,7 +8,7 @@
 
 package:
   name: "rest"
-  version: "2025.01"
+  version: "2025.02a"
 
 source:
   #url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
@@ -23,21 +23,23 @@ source:
   # You may need the openssl package, available on conda-forge:
   #  `conda install openssl -c conda-forge`
   - git: https://gitee.com/restgroup/rest_workspace.git
-    tag: v2025.01
+    tag: v2025.02
     # rev: master
-  - git: https://gitee.com/restgroup/rest.git
-    tag: v2025.01
+  #- git: https://gitee.com/restgroup/rest.git
+  - git: https://gitee.com/canarias/rest.git
+    # tag: v2025.02
+    branch: conda-basis
     target_directory: rest
   - git: https://gitee.com/restgroup/rest_tensors.git
-    tag: v2025.01
+    tag: v2025.02
     # rev: master
     target_directory: rest_tensors
   - git: https://gitee.com/restgroup/rest_libcint.git
-    tag: v2025.01
+    tag: v2025.02
     # rev: master
     target_directory: rest_libcint
   - git: https://gitee.com/restgroup/rest_regression.git
-    tag: v2025.01
+    tag: v2025.02
     # rev: af3223852d5c240c004ef200c5d1fb0270df2267
     target_directory: rest_regression
 
@@ -67,8 +69,8 @@ build:
       # echo ${REST_EXT_DIR}
       # pwd
       # export REST_HOME=".."
-      export REST_FORTRAN_COMPILER=$F90
-      echo RESTFORT${REST_FORTRAN_COMPILER}
+      #export REST_FORTRAN_COMPILER=$F90
+      #echo RESTFORT${REST_FORTRAN_COMPILER}
       export LIBCLANG_PATH="$BUILD_PREFIX/lib"
       # export GCC_INCLUDE="${BUILD_PREFIX}/lib/gcc/x86_64-conda-linux-gnu/15.2.0/include/"
       # export CFLAGS="--sysroot=${CONDA_BUILD_SYSROOT} -I${GCC_INCLUDE} -I${CONDA_BUILD_SYSROOT}/usr/include"
@@ -77,13 +79,14 @@ build:
       # export RUSTFLAGS="--verbose -C link-arg=--sysroot=${CONDA_BUILD_SYSROOT} -C link-arg=-Wl,--dynamic-linker=${CONDA_BUILD_SYSROOT}/lib64/ld-linux-x86-64.so.2 -C link-arg=--verbose -C link-arg=-Wl,--verbose"
       # export BINDGEN_EXTRA_CLANG_ARGS="--sysroot=$CONDA_BUILD_SYSROOT -I${GCC_INCLUDE} -I${CONDA_BUILD_SYSROOT}/usr/include"
       # echo $LDFLAGS
-      ls ${CONDA_BUILD_SYSROOT}/usr/lib
+      #ls ${CONDA_BUILD_SYSROOT}/usr/lib
       # cargo build --release --verbose --target=x86_64-unknown-linux-gnu
-      export RUSTFLAGS="-C link-arg=--verbose -C link-arg=-Wl,--verbose"
-      export LD_LIBRARY_PATH="${CONDA_BUILD_SYSROOT}/usr/lib:${LD_LIBRARY_PATH}"
+      #export RUSTFLAGS="-C link-arg=--verbose -C link-arg=-Wl,--verbose"
+      #$GCC -print-search-dirs  
+      #export LD_LIBRARY_PATH="${CONDA_BUILD_SYSROOT}/usr/lib:${LD_LIBRARY_PATH}"
       # export CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER="clang"
       # export CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS="-C link-arg=-fuse-ld=$CONDA_PREFIX/bin/mold"
-      cargo install -v --path . --profile release --root ${PREFIX}
+      cargo install -v --path . --profile release --root ${PREFIX} 
       mkdir -p ${PREFIX}/share/rest/
       cp -r ./basis-set-pool ${PREFIX}/share/rest/ 
       cp ../rest_deps/lib/librestmatr.so ${PREFIX}/lib/
