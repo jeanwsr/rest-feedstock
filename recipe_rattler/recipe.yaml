@@ -35,8 +35,8 @@ source:
     # rev: master
     target_directory: rest_tensors
   - git: https://gitee.com/restgroup/rest_libcint.git
-    tag: v2025.02
-    # rev: master
+    #tag: v2025.02
+    rev: master
     target_directory: rest_libcint
   - git: https://gitee.com/restgroup/rest_regression.git
     tag: v2025.02
