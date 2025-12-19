@@ -32,13 +32,15 @@ jobs:
             ~/.cargo/registry/index
             ~/.cargo/registry/cache
             ~/.cargo/git/db
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ runner.os }}-cargo-${{ hashFiles('output/bld/rattler-build_rest_regression/work/rest_regression/Cargo.toml') }}
           restore-keys: |
             ${{ runner.os }}-cargo-
       - name: Cache Rattler build directory (with sources)
         uses: actions/cache@v4
         with:
-          path: rattler-build
+          path: |
+            output/bld/rattler-build_rest_regression
+            output/src_cache/
           key: ${{ runner.os }}-rattler-sources-${{ hashFiles('recipe_rest_reg/recipe.yaml') }}
       - name: Build REST Regression recipe
         run: |
