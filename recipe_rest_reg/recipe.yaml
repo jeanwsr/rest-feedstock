@@ -5,12 +5,10 @@
 # Jinja variables help maintain the recipe as you'll update the version only here.
 # Using the name variable with the URL in line 16 is convenient
 # when copying and pasting from another recipe, but not really needed.
-{% set name = "rest_regression" %}
-{% set version = "0.1.0.1" %}
 
 package:
-  name: {{ name|lower }}
-  version: {{ version }}
+  name: "rest_regression"
+  version: v2025.02
 
 source:
   #url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
@@ -24,9 +22,10 @@ source:
   #  `openssl sha256 <file name>`.
   # You may need the openssl package, available on conda-forge:
   #  `conda install openssl -c conda-forge`
-  - git_url: https://gitee.com/restgroup/rest_regression.git
-    git_rev: af3223852d5c240c004ef200c5d1fb0270df2267
-    folder: rest_regression
+  - git: https://gitee.com/restgroup/rest_regression.git
+    # git_rev: af3223852d5c240c004ef200c5d1fb0270df2267
+    tag: v2025.02
+    target_directory: rest_regression
 
 build:
   number: 0
@@ -37,81 +36,32 @@ build:
   # If the installation is complex, or different between Unix and Windows, use separate bld.bat and build.sh files instead of this key.
   # By default, the package will be built for the Python versions supported by conda-forge and for all major OSs.
   # Add the line "skip: True  # [py<35]" (for example) to limit to Python 3.5 and newer, or "skip: True  # [not win]" to limit to Windows.
-  # More info about selectors can be found in the conda-build docs: 
+  # More info about selectors can be found in the conda-build docs:
   # https://docs.conda.io/projects/conda-build/en/latest/resources/define-metadata.html#preprocessing-selectors
-  script: |
-    cd rest_regression
-    # mkdir ../rest_deps
-    # mkdir ../rest_deps/lib
-    # cp ${BUILD_PREFIX}/lib/*.so ../rest_deps/lib/
-    # cp ${BUILD_PREFIX}/lib/python${PY_VER}/site-packages/mokit/lib/librest2fch.so ../rest_deps/lib/
-    # # echo ${REST_EXT_DIR}
-    # # pwd
-    # # export REST_HOME=".."
-    # export REST_FORTRAN_COMPILER=$F90
-    # echo RESTFORT${REST_FORTRAN_COMPILER}
-    # export LIBCLANG_PATH="$BUILD_PREFIX/lib"
-    # export GCC_INCLUDE="${BUILD_PREFIX}/lib/gcc/x86_64-conda-linux-gnu/15.2.0/include/"
-    # export CFLAGS="--sysroot=${CONDA_BUILD_SYSROOT} -I${GCC_INCLUDE} -I${CONDA_BUILD_SYSROOT}/usr/include"
-    # export CXXFLAGS="--sysroot=${CONDA_BUILD_SYSROOT} -I${GCC_INCLUDE} -I${CONDA_BUILD_SYSROOT}/usr/include"
-    # export RUSTFLAGS="-C link-args=--sysroot=${CONDA_BUILD_SYSROOT}"
-    # export BINDGEN_EXTRA_CLANG_ARGS="--sysroot=$CONDA_BUILD_SYSROOT -I${GCC_INCLUDE} -I${CONDA_BUILD_SYSROOT}/usr/include"
-    # cargo build --release --verbose --target=x86_64-unknown-linux-gnu
-    cargo install --path . --profile release --root ${PREFIX}
-    # mkdir -p ${PREFIX}/share/rest/
-    # cp -r ./basis-set-pool ${PREFIX}/share/rest/ 
-    # cp ../rest_deps/lib/librestmatr.so ${PREFIX}/lib/
-    # cp ../rest_deps/lib/librest2fch.so ${PREFIX}/lib/
-    # todo: remove the manual copy
+  script:
+    content: |
+      cd rest_regression
+      cargo install --path . --profile release --root ${PREFIX}
 
 requirements:
   build:
-    # If your project compiles code (such as a C extension) then add the required compilers as separate entries here.
-    # Compilers are named 'c', 'cxx', 'fortran', among others
-    # - {{ compiler('c') }}
-    #- {{ stdlib('c') }}
-    # - {{ compiler('cxx') }}
-    # - {{ compiler('fortran') }}
-    # this is necessary for all compiled recipes
-    # - {{ stdlib('c') }}
-    - {{ compiler('rust') }}
+    - ${{ compiler('rust') }}
     # - libclang
-    - sysroot_linux-64 2.17  
+    - sysroot_linux-64 2.17
   # host:
-  #   - hdf5
-  #   - libcint
-  #   - openblas * openmp*
-  #   - python {{ python }}
-  #   - libxc-c
-  #   - openmpi 4
-  #   - mokit
-  #   - geometric
-  #   - simple-dftd3
-  #   - dftd4
   # run:
-  #   - hdf5
-  #   - libcint
-  #   - openblas * openmp*
-  #   - python {{ python }}
-  #   - libxc-c
-  #   - openmpi 4
-  #   - mokit
-  #   - geometric
-  #   - simple-dftd3
-  #   - dftd4
-
 
 about:
-  home: https://gitee.com/restgroup/rest_regression
+  homepage: https://gitee.com/restgroup/rest_regression
   # summary: 'Rust-based Electronic-Structure Toolkit (REST), aiming at an efficient computational platform for state-of-the-art DFT and WFT methods.'
   # description: |
-  #   Rust-based Electronic-Structure Toolkit (REST), 
+  #   Rust-based Electronic-Structure Toolkit (REST),
   #   aiming at an efficient computational platform for state-of-the-art DFT and WFT methods.
 #   # Remember to specify the license variants for BSD, Apache, GPL, and LGPL.
 #   # Use the SPDX identifier, e.g: GPL-2.0-only instead of GNU General Public License version 2.0
 #   # See https://spdx.org/licenses/
-  # license: GPL-2.0-only
-#   # The license_family, i.e. "BSD" if license is "BSD-3-Clause". 
+# license: GPL-2.0-only
+#   # The license_family, i.e. "BSD" if license is "BSD-3-Clause".
 #   # Optional
 #   license_family: MIT
 #   # It is required to include a license file in the package,
