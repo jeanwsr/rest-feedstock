@@ -35,12 +35,17 @@ jobs:
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
             ${{ runner.os }}-cargo-
+      - name: Cache Rattler build directory (with sources)
+        uses: actions/cache@v4
+        with:
+          path: rattler-build
+          key: ${{ runner.os }}-rattler-sources-${{ hashFiles('recipe_rest_reg/recipe.yaml') }}
       - name: Build REST Regression recipe
         run: |
           # conda info
           # conda env list
           conda activate build-env
-          rattler-build build --recipe recipe_rest_reg --output-dir output -c conda-forge
+          rattler-build build --recipe recipe_rest_reg --no-build-id -output-dir output -c conda-forge
       - name: Upload to Anaconda.org
         env:
           ANACONDA_API_KEY: ${{ secrets.ANACONDA }}
