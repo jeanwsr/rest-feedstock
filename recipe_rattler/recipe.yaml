@@ -43,7 +43,7 @@ source:
     target_directory: rest_regression
 
 build:
-  number: 1
+  number: 2
   script:
     env:
       REST_HOME: ${SRC_DIR}
@@ -90,13 +90,13 @@ requirements:
     - hdf5
     - libcint
     - openblas * openmp*
-    - python 
+    - python
     - libxc-c
     - openmpi 4.*
     - mokit
     - geometric
-    - simple-dftd3 
-    - dftd4 
+    - simple-dftd3
+    - dftd4
     - sysroot_linux-64 ==2.17
     # - clang
     # - lld
@@ -104,25 +104,24 @@ requirements:
     - hdf5
     - libcint
     - openblas * openmp*
-    - python 
+    - python
     - libxc-c
     - openmpi 4.*
     - mokit
     - geometric
-    - simple-dftd3 
-    - dftd4 
+    - simple-dftd3
+    - dftd4
   run:
     - hdf5
     - libcint
     - openblas * openmp*
-    - python 
+    - python
     - libxc-c
     - openmpi 4.*
     - mokit
     - geometric
-    - simple-dftd3 
-    - dftd4 
-
+    - simple-dftd3
+    - dftd4
 
 tests:
   - script: run_tests.sh
@@ -145,18 +144,17 @@ tests:
   # requires:
   #   - pip
 
-
 about:
   homepage: https://gitee.com/restgroup/rest
-  summary: 'Rust-based Electronic-Structure Toolkit (REST), aiming at an efficient computational platform for state-of-the-art DFT and WFT methods.'
+  summary: "Rust-based Electronic-Structure Toolkit (REST), aiming at an efficient computational platform for state-of-the-art DFT and WFT methods."
   description: |
     Rust-based Electronic-Structure Toolkit (REST), 
     aiming at an efficient computational platform for state-of-the-art DFT and WFT methods.
-#   # Remember to specify the license variants for BSD, Apache, GPL, and LGPL.
-#   # Use the SPDX identifier, e.g: GPL-2.0-only instead of GNU General Public License version 2.0
-#   # See https://spdx.org/licenses/
+  #   # Remember to specify the license variants for BSD, Apache, GPL, and LGPL.
+  #   # Use the SPDX identifier, e.g: GPL-2.0-only instead of GNU General Public License version 2.0
+  #   # See https://spdx.org/licenses/
   license: GPL-2.0-only
-#   # The license_family, i.e. "BSD" if license is "BSD-3-Clause". 
+#   # The license_family, i.e. "BSD" if license is "BSD-3-Clause".
 #   # Optional
 #   license_family: MIT
 #   # It is required to include a license file in the package,

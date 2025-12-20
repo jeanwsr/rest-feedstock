@@ -26,6 +26,30 @@ jobs:
           python-version: 3.11
           environment-file: env_rattler.yaml
           # use-mamba: true
+      - name: Extract Git source info for cache key
+        id: get-git-key
+        shell: bash
+        run: |
+          # This uses yq (a YAML processor) to read the git URL and tag from recipe.yaml
+          # Install yq if not present. With Conda, you can add 'yq' to your environment.yml.
+          # This example assumes a simple recipe structure. You may need to adjust the yq query.
+          GIT_URL2=$(yq eval '.source[2].git' recipe_rest_reg/recipe.yaml)
+          GIT_TAG2=$(yq eval '.source[2].tag' recipe_rest_reg/recipe.yaml)
+          GIT_URL3=$(yq eval '.source[3].git' recipe_rest_reg/recipe.yaml)
+          GIT_TAG3=$(yq eval '.source[3].tag' recipe_rest_reg/recipe.yaml)
+
+          # Combine and hash them to create a stable, shorter key component
+          GIT_SOURCE_HASH=$(echo -n "${GIT_URL2}-${GIT_TAG2}-${GIT_URL3}-${GIT_TAG3}" | sha256sum | head -c 12)
+          echo "GIT_SOURCE_HASH=${GIT_SOURCE_HASH}" >> $GITHUB_ENV
+      - name: Cache Rattler git sources
+        uses: actions/cache@v4
+        # env:
+        #   GIT_SOURCE_HASH: ${{ env.GIT_SOURCE_HASH }}
+        with:
+          path: |
+            output/src_cache/rest_tensors.git
+            output/src_cache/rest_libcint.git
+          key: ${{ runner.os }}-git-src-${{ env.GIT_SOURCE_HASH }}
       - name: Build recipe
         run: |
           conda info

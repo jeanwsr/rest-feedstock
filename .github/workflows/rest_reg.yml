@@ -24,17 +24,6 @@ jobs:
           # python-version: 3.11
           environment-file: env_rattler.yaml
           # use-mamba: true
-      - name: Cache Cargo dependencies and build output
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cargo/bin
-            ~/.cargo/registry/index
-            ~/.cargo/registry/cache
-            ~/.cargo/git/db
-          key: ${{ runner.os }}-cargo-${{ hashFiles('output/bld/rattler-build_rest_regression/work/rest_regression/Cargo.toml') }}
-          restore-keys: |
-            ${{ runner.os }}-cargo-
       - name: Extract Git source info for cache key
         id: get-git-key
         shell: bash
@@ -57,14 +46,25 @@ jobs:
             # output/bld/rattler-build_rest_regression
             output/src_cache/
           key: ${{ runner.os }}-git-src-${{ env.GIT_SOURCE_HASH }}
+      # - name: Cache Cargo dependencies and build output
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: |
+      #       ~/.cargo/bin
+      #       ~/.cargo/registry/index
+      #       ~/.cargo/registry/cache
+      #       ~/.cargo/git/db
+      #     key: ${{ runner.os }}-cargo-${{ hashFiles('output/bld/rattler-build_rest_regression/work/rest_regression/Cargo.toml') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-cargo-
       - name: Build REST Regression recipe
         run: |
           # conda info
           # conda env list
           conda activate build-env
           rattler-build build --recipe recipe_rest_reg --no-build-id --output-dir output -c conda-forge
-      # - name: Upload to Anaconda.org
-      #   env:
-      #     ANACONDA_API_KEY: ${{ secrets.ANACONDA }}
-      #   run: |
-      #     rattler-build upload anaconda -o restgroup ./output/*/*.conda
+      - name: Upload to Anaconda.org
+        env:
+          ANACONDA_API_KEY: ${{ secrets.ANACONDA }}
+        run: |
+          rattler-build upload anaconda -o restgroup ./output/*/*.conda
