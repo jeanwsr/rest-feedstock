@@ -35,13 +35,25 @@ jobs:
           key: ${{ runner.os }}-cargo-${{ hashFiles('output/bld/rattler-build_rest_regression/work/rest_regression/Cargo.toml') }}
           restore-keys: |
             ${{ runner.os }}-cargo-
-      - name: Cache Rattler build directory (with sources)
+      - name: Extract Git source info for cache key
+        id: get-git-key
+        shell: bash
+        run: |
+          # This uses yq (a YAML processor) to read the git URL and tag from recipe.yaml
+          # Install yq if not present. With Conda, you can add 'yq' to your environment.yml.
+          # This example assumes a simple recipe structure. You may need to adjust the yq query.
+          GIT_URL=$(yq eval '.source.git.url' ./recipe.yaml)
+          GIT_TAG=$(yq eval '.source.git.tag' ./recipe.yaml)
+
+          # Combine and hash them to create a stable, shorter key component
+          export GIT_SOURCE_HASH=$(echo -n "${GIT_URL}-${GIT_TAG}" | sha256sum | head -c 12)
+      - name: Cache Rattler git sources
         uses: actions/cache@v4
         with:
           path: |
-            output/bld/rattler-build_rest_regression
+            # output/bld/rattler-build_rest_regression
             output/src_cache/
-          key: ${{ runner.os }}-rattler-sources-${{ hashFiles('recipe_rest_reg/recipe.yaml') }}
+          key: ${{ runner.os }}-git-src-${{ env.GIT_SOURCE_HASH }}
       - name: Build REST Regression recipe
         run: |
           # conda info
