@@ -43,7 +43,7 @@ source:
     target_directory: rest_regression
 
 build:
-  number: 2
+  number: 3
   script:
     env:
       REST_HOME: ${SRC_DIR}
@@ -51,6 +51,7 @@ build:
       HDF5_DIR: "${BUILD_PREFIX}"
     content: |
       set -ex
+      # cp utilities/*.py ${PREFIX}/bin
       cd rest
       mkdir ../rest_deps
       mkdir ../rest_deps/lib

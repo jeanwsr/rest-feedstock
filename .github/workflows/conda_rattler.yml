@@ -30,18 +30,52 @@ jobs:
         id: get-git-key
         shell: bash
         run: |
-          # This uses yq (a YAML processor) to read the git URL and tag from recipe.yaml
-          # Install yq if not present. With Conda, you can add 'yq' to your environment.yml.
-          # This example assumes a simple recipe structure. You may need to adjust the yq query.
-          GIT_URL2=$(yq eval '.source[2].git' recipe_rest_reg/recipe.yaml)
-          GIT_TAG2=$(yq eval '.source[2].tag' recipe_rest_reg/recipe.yaml)
-          GIT_URL3=$(yq eval '.source[3].git' recipe_rest_reg/recipe.yaml)
-          GIT_TAG3=$(yq eval '.source[3].tag' recipe_rest_reg/recipe.yaml)
-
+          extract_git_info() {
+            local index=$1
+            local recipe_file=recipe_rattler/recipe.yaml
+            
+            local git_url=$(yq eval ".source[$index].git" "$recipe_file" 2>/dev/null || echo "")
+            
+            if [ -n "$git_url" ] && [ "$git_url" != "null" ]; then
+              # Try tag, then branch, then rev, then default
+              local git_tag=$(yq eval ".source[$index].tag" "$recipe_file" 2>/dev/null || echo "")
+              local git_branch=$(yq eval ".source[$index].branch" "$recipe_file" 2>/dev/null || echo "")
+              local git_rev=$(yq eval ".source[$index].rev" "$recipe_file" 2>/dev/null || echo "")
+              
+              local version=""
+              if [ -n "$git_tag" ] && [ "$git_tag" != "null" ]; then
+                version="tag:$git_tag"
+              elif [ -n "$git_branch" ] && [ "$git_branch" != "null" ]; then
+                version="branch:$git_branch"
+              elif [ -n "$git_rev" ] && [ "$git_rev" != "null" ]; then
+                version="rev:$git_rev"
+              else
+                version="HEAD"
+              fi
+              
+              echo "${git_url}:${version}"
+            fi
+          }
+          GIT_INFO0=$(extract_git_info 0)
+          GIT_INFO1=$(extract_git_info 1)
+          GIT_INFO2=$(extract_git_info 2)
+          GIT_INFO3=$(extract_git_info 3)
+          GIT_INFO4=$(extract_git_info 4)
+          echo $GIT_INFO4
           # Combine and hash them to create a stable, shorter key component
-          GIT_SOURCE_HASH=$(echo -n "${GIT_URL2}-${GIT_TAG2}-${GIT_URL3}-${GIT_TAG3}" | sha256sum | head -c 12)
-          echo "GIT_SOURCE_HASH=${GIT_SOURCE_HASH}" >> $GITHUB_ENV
-      - name: Cache Rattler git sources
+          GIT_SOURCE_HASH_014=$(echo -n "${GIT_INFO0}-${GIT_INFO1}-${GIT_INFO4}" | sha256sum | head -c 12)
+          GIT_SOURCE_HASH_23=$(echo -n "${GIT_INFO2}-${GIT_INFO3}" | sha256sum | head -c 12)
+          echo "GIT_SOURCE_HASH_014=${GIT_SOURCE_HASH_014}" >> $GITHUB_ENV
+          echo "GIT_SOURCE_HASH_23=${GIT_SOURCE_HASH_23}" >> $GITHUB_ENV
+      - name: Cache Rattler git sources 0,1,4
+        uses: actions/cache@v4
+        with:
+          path: |
+            output/src_cache/rest_workspace.git
+            output/src_cache/rest.git
+            output/src_cache/rest_regression.git
+          key: ${{ runner.os }}-git-src-${{ env.GIT_SOURCE_HASH_014 }}
+      - name: Cache Rattler git sources 2,3
         uses: actions/cache@v4
         # env:
         #   GIT_SOURCE_HASH: ${{ env.GIT_SOURCE_HASH }}
@@ -49,7 +83,7 @@ jobs:
           path: |
             output/src_cache/rest_tensors.git
             output/src_cache/rest_libcint.git
-          key: ${{ runner.os }}-git-src-${{ env.GIT_SOURCE_HASH }}
+          key: ${{ runner.os }}-git-src-${{ env.GIT_SOURCE_HASH_23 }}
       - name: Build recipe
         run: |
           conda info
