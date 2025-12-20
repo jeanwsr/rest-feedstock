@@ -91,6 +91,10 @@ jobs:
           conda activate build-env
           rattler-build build --recipe recipe_rattler --output-dir output -c conda-forge -c mokit/label/cf -c restgroup
           # conda-build --test output/*/*tar.bz2
+      - name: Build util
+        run: |
+          conda activate build-env
+          rattler-build build --recipe recipe_rest_util --output-dir output -c conda-forge
       - name: Upload artifacts
         #if: always()
         uses: actions/upload-artifact@v4
@@ -98,6 +102,7 @@ jobs:
           name: rest-conda-package-rattler
           path: output/*/*.conda
       - name: Upload to Anaconda.org
+        continue-on-error: true
         env:
           ANACONDA_API_KEY: ${{ secrets.ANACONDA }}
         run: |
