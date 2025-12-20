@@ -49,6 +49,8 @@ jobs:
           export GIT_SOURCE_HASH=$(echo -n "${GIT_URL}-${GIT_TAG}" | sha256sum | head -c 12)
       - name: Cache Rattler git sources
         uses: actions/cache@v4
+        env:
+          GIT_SOURCE_HASH: ${{ env.GIT_SOURCE_HASH }}
         with:
           path: |
             # output/bld/rattler-build_rest_regression
@@ -60,8 +62,8 @@ jobs:
           # conda env list
           conda activate build-env
           rattler-build build --recipe recipe_rest_reg --no-build-id --output-dir output -c conda-forge
-      - name: Upload to Anaconda.org
-        env:
-          ANACONDA_API_KEY: ${{ secrets.ANACONDA }}
-        run: |
-          rattler-build upload anaconda -o restgroup ./output/*/*.conda
+      # - name: Upload to Anaconda.org
+      #   env:
+      #     ANACONDA_API_KEY: ${{ secrets.ANACONDA }}
+      #   run: |
+      #     rattler-build upload anaconda -o restgroup ./output/*/*.conda
