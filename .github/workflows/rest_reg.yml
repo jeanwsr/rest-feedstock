@@ -42,8 +42,8 @@ jobs:
           # This uses yq (a YAML processor) to read the git URL and tag from recipe.yaml
           # Install yq if not present. With Conda, you can add 'yq' to your environment.yml.
           # This example assumes a simple recipe structure. You may need to adjust the yq query.
-          GIT_URL=$(yq eval '.source.git.url' recipe_rest_reg/recipe.yaml)
-          GIT_TAG=$(yq eval '.source.git.tag' recipe_rest_reg/recipe.yaml)
+          GIT_URL=$(yq eval '.source[0].git' recipe_rest_reg/recipe.yaml)
+          GIT_TAG=$(yq eval '.source[0].tag' recipe_rest_reg/recipe.yaml)
 
           # Combine and hash them to create a stable, shorter key component
           export GIT_SOURCE_HASH=$(echo -n "${GIT_URL}-${GIT_TAG}" | sha256sum | head -c 12)
