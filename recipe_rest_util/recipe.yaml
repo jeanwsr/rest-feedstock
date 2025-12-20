@@ -31,6 +31,7 @@ build:
   script:
     content: |
       set -ex
+      mkdir -p ${PREFIX}/bin
       cp utilities/*.py ${PREFIX}/bin
 
 requirements:

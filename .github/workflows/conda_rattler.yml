@@ -18,6 +18,11 @@ jobs:
         shell: bash -l {0}
     steps:
       - uses: actions/checkout@v2
+      - name: Cache conda
+        uses: actions/cache@v4
+        with:
+          path: ~/conda_pkgs_dir
+          key: ${{ runner.os }}-conda-${{ hashFiles('env_rattler.yaml') }}
       - name: Set up Miniconda
         uses: conda-incubator/setup-miniconda@v3
         with:
@@ -33,15 +38,12 @@ jobs:
           extract_git_info() {
             local index=$1
             local recipe_file=recipe_rattler/recipe.yaml
-            
             local git_url=$(yq eval ".source[$index].git" "$recipe_file" 2>/dev/null || echo "")
-            
             if [ -n "$git_url" ] && [ "$git_url" != "null" ]; then
               # Try tag, then branch, then rev, then default
               local git_tag=$(yq eval ".source[$index].tag" "$recipe_file" 2>/dev/null || echo "")
               local git_branch=$(yq eval ".source[$index].branch" "$recipe_file" 2>/dev/null || echo "")
               local git_rev=$(yq eval ".source[$index].rev" "$recipe_file" 2>/dev/null || echo "")
-              
               local version=""
               if [ -n "$git_tag" ] && [ "$git_tag" != "null" ]; then
                 version="tag:$git_tag"
@@ -52,7 +54,6 @@ jobs:
               else
                 version="HEAD"
               fi
-              
               echo "${git_url}:${version}"
             fi
           }
