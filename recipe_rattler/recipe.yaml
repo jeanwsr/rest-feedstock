@@ -46,8 +46,8 @@ build:
   number: 4
   files:
     exclude:
-      - **/__pycache__
-      - **/test-files
+      - "**/__pycache__"
+      - "**/test-files"
   script:
     env:
       REST_HOME: ${SRC_DIR}
