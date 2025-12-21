@@ -5,7 +5,6 @@ on:
     branches:
       - main
     paths:
-      - .github/workflows/conda_rattler.yml
       - recipe_rattler/**
   # pull_request:
   #   branches:
@@ -18,19 +17,7 @@ jobs:
         shell: bash -l {0}
     steps:
       - uses: actions/checkout@v2
-      - name: Cache conda
-        uses: actions/cache@v4
-        with:
-          path: ~/conda_pkgs_dir
-          key: ${{ runner.os }}-conda-${{ hashFiles('env_rattler.yaml') }}
-      - name: Set up Miniconda
-        uses: conda-incubator/setup-miniconda@v3
-        with:
-          auto-update-conda: true
-          activate-environment: build-env
-          python-version: 3.11
-          environment-file: env_rattler.yaml
-          # use-mamba: true
+      - uses: ./actions/cache-setup-conda
       - name: Extract Git source info for cache key
         id: get-git-key
         shell: bash
@@ -96,12 +83,12 @@ jobs:
         run: |
           conda activate build-env
           rattler-build build --recipe recipe_rest_util --output-dir output -c conda-forge
-      - name: Upload artifacts
-        #if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: rest-conda-package-rattler
-          path: output/*/*.conda
+      # - name: Upload artifacts
+      #   #if: always()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: rest-conda-package-rattler
+      #     path: output/*/*.conda
       - name: Upload to Anaconda.org
         continue-on-error: true
         env:
