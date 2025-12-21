@@ -78,12 +78,12 @@ jobs:
           conda info
           # conda env list
           conda activate build-env
-          rattler-build build --recipe recipe_rattler --output-dir output --skip-existing=all -c conda-forge -c mokit/label/cf -c restgroup
+          rattler-build build --recipe recipe_rattler --output-dir output --skip-existing=all -c conda-forge -c mokit/label/cf -c restgroup -c restgroup/label/test
           # conda-build --test output/*/*tar.bz2
       - name: Build util
         run: |
           conda activate build-env
-          rattler-build build --recipe recipe_rest_util --output-dir output --skip-existing=all -c conda-forge
+          rattler-build build --recipe recipe_rest_util --output-dir output --skip-existing=all -c conda-forge -c restgroup
       # - name: Upload artifacts
       #   #if: always()
       #   uses: actions/upload-artifact@v4
@@ -101,4 +101,4 @@ jobs:
         env:
           ANACONDA_API_KEY: ${{ secrets.ANACONDA }}
         run: |
-          rattler-build upload anaconda -o restgroup -c test ./output/*/rest-util*.conda
+          rattler-build upload anaconda -o restgroup ./output/*/rest-util*.conda
