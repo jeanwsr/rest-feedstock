@@ -80,8 +80,6 @@ build:
       cp ../rest_deps/lib/librestmatr.so ${PREFIX}/lib/
       cp ../rest_deps/lib/librest2fch.so ${PREFIX}/lib/
       # todo: remove the manual copy
-      # cd ..
-      # cp utilities/*.py ${PREFIX}/bin
 
 requirements:
   build:
