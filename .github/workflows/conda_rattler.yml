@@ -78,7 +78,7 @@ jobs:
           conda info
           # conda env list
           conda activate build-env
-          rattler-build build --recipe recipe_rattler --output-dir output --skip-existing=all -c conda-forge -c mokit/label/cf -c restgroup -c restgroup/label/test
+          rattler-build build --recipe recipe_rattler --output-dir output --skip-existing=all -c conda-forge -c mokit -c restgroup
           # conda-build --test output/*/*tar.bz2
       - name: Build util
         run: |
@@ -95,7 +95,7 @@ jobs:
         env:
           ANACONDA_API_KEY: ${{ secrets.ANACONDA }}
         run: |
-          rattler-build upload anaconda -o restgroup -c test ./output/*/rest-20*.conda
+          rattler-build upload anaconda -o restgroup ./output/*/rest-20*.conda
       - name: Upload to Anaconda.org
         continue-on-error: true
         env:

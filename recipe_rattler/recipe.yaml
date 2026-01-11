@@ -8,7 +8,7 @@
 
 package:
   name: "rest"
-  version: "2025.02.1"
+  version: "2025.02.2"
 
 source:
   #url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
@@ -27,7 +27,7 @@ source:
     # rev: master
   - git: https://gitee.com/restgroup/rest.git
     #tag: v2025.01
-    rev: 98bdcf9fb574d4a522f9731e86b1ada269b74b0e
+    rev: 3a78c2990b6ecce42e7eeba8ca46e1b9be112006
     target_directory: rest
   - git: https://gitee.com/restgroup/rest_tensors.git
     tag: v2025.02
