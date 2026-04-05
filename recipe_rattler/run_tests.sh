@@ -8,7 +8,8 @@ echo ${REST_EXT_DIR}
 echo ${REST_HOME}
 echo ${PREFIX}
 # catch the error if rest_regression fail and print the log file
-if ! ${PREFIX}/bin/rest_regression -r ./bench_pool -p ${PREFIX}/bin/rest; then
-    cat ./work_pool/O2_MP2.log
+if ! ${PREFIX}/bin/rest_regression -r ./bench_pool -p rest; then
+    cd bench_pool/CO_HF_Dipole
+    rest
     exit 1
 fi
