@@ -58,16 +58,13 @@ build:
       cd rest
       mkdir ../rest_deps
       mkdir ../rest_deps/lib
-      echo ${LIB_EXT}
       if [[ "$target_platform" == osx-* ]]; then
-        cp ${BUILD_PREFIX}/lib/*.dylib ../rest_deps/lib/
-        cp ${BUILD_PREFIX}/lib/python${PY_VER}/site-packages/mokit/lib/librest2fch.dylib ../rest_deps/lib/
         LIB_EXT="dylib"
       else
-        cp ${BUILD_PREFIX}/lib/*.so ../rest_deps/lib/
-        cp ${BUILD_PREFIX}/lib/python${PY_VER}/site-packages/mokit/lib/librest2fch.so ../rest_deps/lib/
         LIB_EXT="so"
       fi
+      cp ${BUILD_PREFIX}/lib/*.${LIB_EXT} ../rest_deps/lib/
+      cp ${BUILD_PREFIX}/lib/python${PY_VER}/site-packages/mokit/lib/librest2fch.${LIB_EXT} ../rest_deps/lib/
       export LIBCLANG_PATH="$BUILD_PREFIX/lib"
       cargo install --path . --profile release --root ${PREFIX}
       mkdir -p ${PREFIX}/share/rest/

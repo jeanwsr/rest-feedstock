@@ -12,7 +12,7 @@ package:
 
 source:
   - git: https://gitee.com/restgroup/rest_regression.git
-    git_rev: 71be51b48bbf43c87e41609f12be93bb57eae6e2
+    rev: 71be51b48bbf43c87e41609f12be93bb57eae6e2
     # tag: v2025.02
     target_directory: rest_regression
 
