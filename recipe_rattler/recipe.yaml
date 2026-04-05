@@ -68,8 +68,8 @@ build:
       else
         LIB_EXT="so"
       fi
-      cp ${BUILD_PREFIX}/lib/*.${LIB_EXT} ../rest_deps/lib/
-      cp ${BUILD_PREFIX}/lib/python${PY_VER}/site-packages/mokit/lib/librest2fch.${LIB_EXT} ../rest_deps/lib/
+      cp ${BUILD_PREFIX}/lib/*.${LIB_EXT} ${REST_EXT_DIR}/
+      cp ${BUILD_PREFIX}/lib/python${PY_VER}/site-packages/mokit/lib/librest2fch.${LIB_EXT} ${REST_EXT_DIR}/
       export LIBCLANG_PATH="$BUILD_PREFIX/lib"
       cargo install --path . --profile release --root ${PREFIX}
       mkdir -p ${PREFIX}/share/rest/
