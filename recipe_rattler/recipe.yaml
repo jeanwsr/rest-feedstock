@@ -97,6 +97,8 @@ requirements:
     - dftd4
     - if: linux
       then: sysroot_linux-64 ==2.17
+    - if: osx
+      then: llvm-openmp
   host:
     - hdf5
     - libcint
@@ -108,6 +110,8 @@ requirements:
     - geometric
     - simple-dftd3
     - dftd4
+    - if: osx
+      then: llvm-openmp
   run:
     - hdf5
     - libcint
