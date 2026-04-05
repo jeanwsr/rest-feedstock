@@ -8,4 +8,7 @@ echo ${REST_EXT_DIR}
 echo ${REST_HOME}
 echo ${PREFIX}
 # catch the error if rest_regression fail and print the log file
-${PREFIX}/bin/rest_regression -r ./bench_pool -p ${PREFIX}/bin/rest || cat ./work_pool/HI_RHF_GRAD.log
+if ! ${PREFIX}/bin/rest_regression -r ./bench_pool -p ${PREFIX}/bin/rest; then
+    cat ./work_pool/O2_MP2.log
+    exit 1
+fi
