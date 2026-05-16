@@ -84,7 +84,7 @@ build:
         fi
       done
       if [[ -z "${MOKIT_LIB}" ]]; then
-        echo "Could not find mokit bridge library for extension ${LIB_EXT}" >&2
+        echo "Could not find mokit bridge library (librest2fch.${LIB_EXT} or rest2fch.${LIB_EXT}) in expected site-packages locations" >&2
         exit 1
       fi
       cp "${MOKIT_LIB}" "${REST_EXT_DIR}/"

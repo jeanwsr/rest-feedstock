@@ -18,7 +18,7 @@ resolve_bin() {
       echo "${PREFIX}/Library/bin/${name}.exe"
       return 0
     fi
-    echo "Could not find ${name}.exe under ${PREFIX}/bin or ${PREFIX}/Library/bin" >&2
+    echo "Could not find ${name}.exe under ${PREFIX}/bin or ${PREFIX}/Library/bin on Windows platform" >&2
     return 1
   fi
   echo "${default_path}"
