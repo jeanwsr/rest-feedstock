@@ -5,7 +5,7 @@ import shutil
 
 
 prefix = pathlib.Path(os.environ["PREFIX"])
-target = os.environ.get("target_platform", "")
+target = os.environ.get("TARGET_PLATFORM", os.environ.get("target_platform", ""))
 destination = prefix / ("Scripts" if target.startswith("win-") else "bin")
 destination.mkdir(parents=True, exist_ok=True)
 
