@@ -104,10 +104,16 @@ build:
 
 requirements:
   build:
-    - ${{ compiler('c') }}
+    - if: win
+      then: gcc_win-64
+      else: ${{ compiler('c') }}
     #- {{ stdlib('c') }}
-    - ${{ compiler('cxx') }}
-    - ${{ compiler('fortran') }}
+    - if: win
+      then: gxx_win-64
+      else: ${{ compiler('cxx') }}
+    - if: win
+      then: gfortran_win-64
+      else: ${{ compiler('fortran') }}
     - ${{ compiler('rust') }}
     - libclang 21.*
     - hdf5
