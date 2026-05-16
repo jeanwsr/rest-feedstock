@@ -137,3 +137,27 @@ jobs:
           ANACONDA_API_KEY: ${{ secrets.ANACONDA }}
         run: |
           rattler-build upload anaconda -o restgroup ./output/*/rest-util*.conda
+
+  build-rest-util-windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash -l {0}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          auto-update-conda: true
+          activate-environment: build-env
+          environment-file: env_rattler.yaml
+      - name: Build util (win-64)
+        run: |
+          conda activate build-env
+          rattler-build build --recipe recipe_rest_util --output-dir output --skip-existing=all --target-platform win-64 -c conda-forge -c restgroup
+      - name: Upload util to Anaconda.org
+        continue-on-error: true
+        env:
+          ANACONDA_API_KEY: ${{ secrets.ANACONDA }}
+        run: |
+          rattler-build upload anaconda -o restgroup ./output/*/rest-util*.conda
