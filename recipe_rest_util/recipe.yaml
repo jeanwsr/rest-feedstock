@@ -20,13 +20,17 @@ source:
     tag: v2025.02
 
 build:
-  number: 1
+  number: 2
   # noarch: python
   script:
     content: |
       set -ex
       mkdir -p ${PREFIX}/bin
       cp utilities/*.py ${PREFIX}/bin
+      if [[ "$target_platform" == win-* ]]; then
+        mkdir -p ${PREFIX}/Scripts
+        cp utilities/*.py ${PREFIX}/Scripts
+      fi
 
 requirements:
   run:
