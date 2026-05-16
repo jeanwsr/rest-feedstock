@@ -24,7 +24,7 @@ build:
   # noarch: python
   script:
     content: |
-      python -c "exec(\"\"\"import glob\nimport os\nimport pathlib\nimport shutil\n\nprefix = pathlib.Path(os.environ['PREFIX'])\ntarget = os.environ.get('target_platform', '')\nfiles = [pathlib.Path(path) for path in glob.glob('utilities/*.py')]\n\nbin_dir = prefix / 'bin'\nbin_dir.mkdir(parents=True, exist_ok=True)\nfor source_path in files:\n    shutil.copy2(source_path, bin_dir / source_path.name)\n\nif target.startswith('win-'):\n    scripts_dir = prefix / 'Scripts'\n    scripts_dir.mkdir(parents=True, exist_ok=True)\n    for source_path in files:\n        shutil.copy2(source_path, scripts_dir / source_path.name)\n\"\"\")"
+      python build_util_scripts.py
 
 requirements:
   build:
