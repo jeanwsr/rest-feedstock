@@ -6,15 +6,26 @@ import shutil
 prefix = pathlib.Path(os.environ["PREFIX"])
 target = os.environ.get("TARGET_PLATFORM") or os.environ.get("target_platform")
 if not target:
-    raise RuntimeError("Missing required environment variable: TARGET_PLATFORM or target_platform")
+    raise RuntimeError("Missing required environment variable: TARGET_PLATFORM (or target_platform)")
 
 destination = prefix / ("Scripts" if target.startswith("win-") else "bin")
 destination.mkdir(parents=True, exist_ok=True)
 
-utilities_dir = pathlib.Path.cwd() / "utilities"
-sources = sorted(utilities_dir.glob("*.py"))
+script_dir = pathlib.Path(__file__).resolve().parent
+candidate_dirs = [pathlib.Path.cwd() / "utilities", script_dir / "utilities"]
+sources = []
+utilities_dir = None
+for candidate_dir in candidate_dirs:
+    candidate_sources = sorted(candidate_dir.glob("*.py"))
+    if candidate_sources:
+        sources = candidate_sources
+        utilities_dir = candidate_dir
+        break
+
 if not sources:
-    raise FileNotFoundError(f"No utility scripts found in {utilities_dir}")
+    raise FileNotFoundError(
+        f"No utility scripts found in any expected directory: {', '.join(str(path) for path in candidate_dirs)}"
+    )
 
 for source in sources:
     shutil.copy2(source, destination / source.name)
