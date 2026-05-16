@@ -1,4 +1,3 @@
-import glob
 import os
 import pathlib
 import shutil
@@ -7,7 +6,7 @@ import shutil
 prefix = pathlib.Path(os.environ["PREFIX"])
 target = os.environ.get("TARGET_PLATFORM") or os.environ.get("target_platform")
 if not target:
-    raise RuntimeError("TARGET_PLATFORM (or target_platform) is required")
+    raise RuntimeError("Missing required environment variable: TARGET_PLATFORM or target_platform")
 
 destination = prefix / ("Scripts" if target.startswith("win-") else "bin")
 destination.mkdir(parents=True, exist_ok=True)
