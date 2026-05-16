@@ -87,7 +87,7 @@ build:
         exit 1
       fi
       cp "${MOKIT_LIB}" "${REST_EXT_DIR}/"
-      export LIBCLANG_PATH="${LIBCLANG_PATH}"
+      export LIBCLANG_PATH
       cargo install --path . --profile release --root ${PREFIX}
       mkdir -p ${PREFIX}/share/rest/
       cp -r ./basis-set-pool ${PREFIX}/share/rest/

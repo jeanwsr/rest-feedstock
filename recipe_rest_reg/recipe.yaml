@@ -23,7 +23,6 @@ build:
   # https://docs.conda.io/projects/conda-build/en/latest/resources/define-metadata.html#preprocessing-selectors
   script:
     content: |
-      set -ex
       cd rest_regression
       cargo install --path . --profile release --root ${PREFIX}
 

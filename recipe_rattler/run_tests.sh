@@ -21,7 +21,8 @@ if [[ "${target_platform}" == win-* ]]; then
     REST_REG_BIN="${PREFIX}/Library/bin/rest_regression.exe"
   fi
 fi
-which "${REST_BIN}"
+test -x "${REST_BIN}"
+test -x "${REST_REG_BIN}"
 echo ${REST_EXT_DIR}
 echo ${REST_HOME}
 echo ${PREFIX}
