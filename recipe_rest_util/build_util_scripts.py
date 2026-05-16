@@ -4,7 +4,11 @@ import shutil
 
 
 prefix = pathlib.Path(os.environ["PREFIX"])
-target = os.environ.get("TARGET_PLATFORM") or os.environ.get("target_platform")
+target = (
+    os.environ.get("TARGET_PLATFORM")
+    if "TARGET_PLATFORM" in os.environ
+    else os.environ.get("target_platform")
+)
 if not target:
     raise RuntimeError("Missing required environment variable: TARGET_PLATFORM (or target_platform)")
 
@@ -12,7 +16,7 @@ destination = prefix / ("Scripts" if target.startswith("win-") else "bin")
 destination.mkdir(parents=True, exist_ok=True)
 
 script_dir = pathlib.Path(__file__).resolve().parent
-candidate_dirs = [pathlib.Path.cwd() / "utilities", script_dir / "utilities"]
+candidate_dirs = [script_dir / "utilities", pathlib.Path.cwd() / "utilities"]
 sources = []
 utilities_dir = None
 for candidate_dir in candidate_dirs:
