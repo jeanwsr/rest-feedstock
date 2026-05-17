@@ -92,6 +92,7 @@ build:
       fi
       cp "${MOKIT_LIB}" "${REST_EXT_DIR}/"
       export LIBCLANG_PATH
+      export REST_EXT_DIR
       cargo install --path . --profile release --root ${PREFIX}
       mkdir -p ${PREFIX}/share/rest/
       cp -r ./basis-set-pool ${PREFIX}/share/rest/
