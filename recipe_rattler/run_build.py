@@ -17,8 +17,30 @@ print(f"Running build script: {script}")
 bash_cmd = "bash"
 if os.name == "nt":
     candidates = []
+    bash_env = os.environ.get("BASH")
+    if bash_env:
+        candidates.append(pathlib.Path(bash_env))
+    try:
+        where_bash = subprocess.check_output(["where", "bash"], text=True, encoding="utf-8", errors="ignore")
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        where_bash = ""
+    preferred_where = []
+    fallback_where = []
+    for line in where_bash.splitlines():
+        candidate = pathlib.Path(line.strip())
+        candidate_str = str(candidate).lower()
+        if not candidate_str:
+            continue
+        if candidate_str.endswith(r"\windows\system32\bash.exe"):
+            continue
+        if "library\\usr\\bin\\bash.exe" in candidate_str:
+            preferred_where.append(candidate)
+        else:
+            fallback_where.append(candidate)
+    candidates.extend(preferred_where)
+    candidates.extend(fallback_where)
     build_prefix = os.environ.get("BUILD_PREFIX")
-    if build_prefix:
+    if build_prefix and "%" not in build_prefix:
         candidates.append(pathlib.Path(build_prefix) / "Library" / "usr" / "bin" / "bash.exe")
     pf_values = [
         os.environ.get("ProgramW6432"),
@@ -33,7 +55,12 @@ if os.name == "nt":
             continue
         seen.add(pf)
         candidates.append(pathlib.Path(pf) / "Git" / "bin" / "bash.exe")
+    seen_candidates = set()
     for candidate in candidates:
+        candidate_key = str(candidate).lower()
+        if candidate_key in seen_candidates:
+            continue
+        seen_candidates.add(candidate_key)
         if candidate.is_file():
             bash_cmd = str(candidate)
             break
