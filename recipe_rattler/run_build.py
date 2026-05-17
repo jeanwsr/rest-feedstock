@@ -17,10 +17,10 @@ print(f"Running build script: {script}")
 bash_cmd = "bash"
 if os.name == "nt":
     program_files = pathlib.Path(os.environ.get("ProgramFiles", r"C:\Program Files"))
-    candidates = [
-        program_files / "Git" / "bin" / "bash.exe",
-        pathlib.Path(os.environ.get("BUILD_PREFIX", "")) / "Library" / "usr" / "bin" / "bash.exe",
-    ]
+    candidates = [program_files / "Git" / "bin" / "bash.exe"]
+    build_prefix = os.environ.get("BUILD_PREFIX")
+    if build_prefix:
+        candidates.append(pathlib.Path(build_prefix) / "Library" / "usr" / "bin" / "bash.exe")
     for candidate in candidates:
         if candidate.is_file():
             bash_cmd = str(candidate)
@@ -29,8 +29,7 @@ if os.name == "nt":
         bash_cmd = shutil.which("bash") or "bash"
 
 try:
-    script_arg = script.as_posix() if os.name == "nt" else str(script)
-    subprocess.run([bash_cmd, script_arg], check=True)
+    subprocess.run([bash_cmd, str(script)], check=True)
 except FileNotFoundError as exc:
     raise RuntimeError(f"Failed to execute build script: bash not found ({bash_cmd}). Ensure bash is installed and available in PATH.") from exc
 except subprocess.CalledProcessError as exc:
