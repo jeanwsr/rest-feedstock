@@ -24,7 +24,7 @@ build:
   # noarch: python
   script:
     content: |
-      python build_util_scripts.py
+      python "${RECIPE_DIR}/build_util_scripts.py" || python "%RECIPE_DIR%/build_util_scripts.py"
 
 requirements:
   build:
