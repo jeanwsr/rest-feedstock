@@ -21,7 +21,7 @@ if os.name == "nt":
     if bash_env:
         candidates.append(pathlib.Path(bash_env))
     try:
-        where_bash = subprocess.check_output(["where", "bash"], text=True, encoding="utf-8", errors="ignore")
+        where_bash = subprocess.check_output(["where", "bash"], encoding="utf-8", errors="ignore")
     except (subprocess.CalledProcessError, FileNotFoundError):
         where_bash = ""
     preferred_where = []
