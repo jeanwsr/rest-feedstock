@@ -40,6 +40,7 @@ if os.name == "nt":
     candidates.extend(preferred_where)
     candidates.extend(fallback_where)
     build_prefix = os.environ.get("BUILD_PREFIX")
+    # Ignore unresolved cmd-style placeholders like "%BUILD_PREFIX%".
     if build_prefix and "%" not in build_prefix:
         candidates.append(pathlib.Path(build_prefix) / "Library" / "usr" / "bin" / "bash.exe")
     pf_values = [
