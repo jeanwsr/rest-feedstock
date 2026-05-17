@@ -51,6 +51,7 @@ build:
       REST_HOME: ${SRC_DIR}
       # REST_DEPS: "${SRC_DIR}/rest_deps_placeholder_placeholder"
       HDF5_DIR: "${BUILD_PREFIX}"
+    interpreter: bash
     content: |
       set -ex
       cd rest
