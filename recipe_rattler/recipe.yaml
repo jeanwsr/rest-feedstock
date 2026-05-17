@@ -25,11 +25,11 @@ source:
     rev: 208b61427787a5fb946a1a9b7bf9daa8dd0e4ab9
     #branch: support-mac
     target_directory: rest
-  - git: https://gitee.com/restgroup/rest_tensors.git
-  #- git: https://gitee.com/canarias/rest_tensors.git
+  #- git: https://gitee.com/restgroup/rest_tensors.git
+  - git: https://gitee.com/canarias/rest_tensors.git
     #tag: v2025.02
-    rev: 04bb51bd6968f1d32929c2430f1aad021fe8f3e8
-    #branch: cfg-libc-import
+    #rev: 04bb51bd6968f1d32929c2430f1aad021fe8f3e8
+    branch: for-win
     target_directory: rest_tensors
   - git: https://gitee.com/restgroup/rest_libcint.git
     #tag: v2025.01
